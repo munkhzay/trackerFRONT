@@ -2,7 +2,7 @@ import Logo from "../../public/icons/Logo";
 
 const Navbar = () => {
   return (
-    <div className="bg-white w-full px-[120px] py-4 flex justify-between">
+    <div className="bg-white w-full px-[120px] py-4 flex justify-between max-w-screen-xl">
       <div className="flex gap-6 items-center">
         <Logo />
         <p> Dashboard </p>
