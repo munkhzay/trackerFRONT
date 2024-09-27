@@ -2,6 +2,8 @@ import Navbar from "../components/Navbar";
 import { useState } from "react";
 import MyCategories from "@/components/Category";
 import PlusSign from "../../public/icons/PlusSign";
+import RentIcon from "../../public/icons/RentIcon";
+import OneRecord from "../components/OneRecord";
 
 const categories = [
   "Food & Drinks",
@@ -84,7 +86,9 @@ const Records = () => {
             </div>
           </div>
         </div>
-        <div className="w-[894px]"></div>
+        <div className="w-[894px] flex flex-col gap-4">
+          <div></div>
+        </div>
       </div>
     </div>
   );
