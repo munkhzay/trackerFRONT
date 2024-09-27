@@ -2,8 +2,11 @@ import Navbar from "../components/Navbar";
 import { useState } from "react";
 import MyCategories from "@/components/Category";
 import PlusSign from "../../public/icons/PlusSign";
-import RentIcon from "../../public/icons/RentIcon";
 import OneRecord from "../components/OneRecord";
+import { FaChevronLeft } from "react-icons/fa6";
+import { FaAngleRight } from "react-icons/fa6";
+import RentIcon from "../../public/icons/RentIcon";
+import FoodExpense from "../../public/icons/FoodExpenseIcon";
 
 const categories = [
   "Food & Drinks",
@@ -19,9 +22,119 @@ const categories = [
   "Others",
 ];
 
+const records = [
+  [
+    {
+      color: "#23E01F",
+      image: <RentIcon />,
+      time: "14:00",
+      text: "Lending & Renting",
+      money: "+ 1,000₮",
+      iconColor: "#0166FF",
+    },
+    {
+      color: "#F54949",
+      image: <FoodExpense />,
+      time: "14:00",
+      text: "Food & Drinks",
+      money: "- 1,000₮",
+      iconColor: "#FF4545",
+    },
+    {
+      color: "#F54949",
+      image: <FoodExpense />,
+      time: "14:00",
+      text: "Food & Drinks",
+      money: "- 1,000₮",
+      iconColor: "#FF4545",
+    },
+    {
+      color: "#23E01F",
+      image: <RentIcon />,
+      time: "14:00",
+      text: "Lending & Renting",
+      money: "+ 1,000₮",
+      iconColor: "#0166FF",
+    },
+    {
+      color: "#23E01F",
+      image: <RentIcon />,
+      time: "14:00",
+      text: "Lending & Renting",
+      money: "+ 1,000₮",
+      iconColor: "#0166FF",
+    },
+  ],
+  [
+    {
+      color: "#23E01F",
+      image: <RentIcon />,
+      time: "14:00",
+      text: "Lending & Renting",
+      money: "+ 1,000₮",
+      iconColor: "#0166FF",
+    },
+    {
+      color: "#F54949",
+      image: <FoodExpense />,
+      time: "14:00",
+      text: "Food & Drinks",
+      money: "- 1,000₮",
+      iconColor: "#FF4545",
+    },
+    {
+      color: "#F54949",
+      image: <FoodExpense />,
+      time: "14:00",
+      text: "Food & Drinks",
+      money: "- 1,000₮",
+      iconColor: "#FF4545",
+    },
+    {
+      color: "#23E01F",
+      image: <RentIcon />,
+      time: "14:00",
+      text: "Lending & Renting",
+      money: "+ 1,000₮",
+      iconColor: "#0166FF",
+    },
+    {
+      color: "#F54949",
+      image: <FoodExpense />,
+      time: "14:00",
+      text: "Food & Drinks",
+      money: "- 1,000₮",
+      iconColor: "#FF4545",
+    },
+    {
+      color: "#F54949",
+      image: <FoodExpense />,
+      time: "14:00",
+      text: "Food & Drinks",
+      money: "- 1,000₮",
+      iconColor: "#FF4545",
+    },
+  ],
+];
+
 const Records = () => {
   const [selected, setSelected] = useState("All");
-
+  const [myRecords, setRecords] = useState(records);
+  const handleExpense = () => {
+    const filtered = records.map((day) =>
+      day.filter((oneRecord) => oneRecord.money.includes("-"))
+    );
+    setRecords(filtered);
+  };
+  const handleIncome = () => {
+    const filtered = records.map((day) =>
+      day.filter((oneRecord) => oneRecord.money.includes("+"))
+    );
+    setRecords(filtered);
+  };
+  const handleAll = () => {
+    setRecords(records);
+  };
   const handleChange = (option) => {
     setSelected(option);
   };
@@ -29,7 +142,7 @@ const Records = () => {
     <div className="bg-[#F3F4F6] flex flex-col gap-8 items-center">
       <Navbar />
       <div className="flex gap-6">
-        <div className="bg-white flex flex-col px-6 py-4 w-[282px] gap-6 rounded-xl">
+        <div className="bg-white flex flex-col px-6 py-4 w-[282px] gap-6 rounded-xl h-fit">
           <div className="flex flex-col gap-6">
             <p> Records </p>
             <button className="flex gap-1 w-[225px] bg-[#0166FF] rounded-3xl text-white items-center justify-center">
@@ -48,6 +161,7 @@ const Records = () => {
                 checked={"All" === selected}
                 className="checkbox"
                 onChange={() => handleChange("All")}
+                onClick={() => handleAll()}
               />
               All
             </div>
@@ -57,6 +171,7 @@ const Records = () => {
                 checked={"Income" === selected}
                 className="checkbox"
                 onChange={() => handleChange("Income")}
+                onClick={() => handleIncome()}
               />
               Income
             </div>
@@ -66,6 +181,7 @@ const Records = () => {
                 checked={"Expense" === selected}
                 className="checkbox"
                 onChange={() => handleChange("Expense")}
+                onClick={() => handleExpense()}
               />
               Expense
             </div>
@@ -87,7 +203,55 @@ const Records = () => {
           </div>
         </div>
         <div className="w-[894px] flex flex-col gap-4">
-          <div></div>
+          <div className="flex justify-between">
+            <div className="flex gap-4 items-center">
+              <div className="w-8 h-8 rounded-lg p-1.5 bg-[#E5E7EB]">
+                <FaChevronLeft />
+              </div>
+              <p className="font-normal text-base"> Last 30 Days</p>
+              <div className="w-8 h-8 rounded-lg p-1.5 bg-[#E5E7EB]">
+                <FaAngleRight />
+              </div>
+            </div>
+            <select className="w-[180px] py-3 px-4 rounded-lg font-semibold text-base text-[#1F2937] border border-[#D1D5DB]">
+              <option selected>Newest First</option>
+              <option> Latest First </option>
+            </select>
+          </div>
+          <div className="flex flex-col gap-3">
+            <p className="font-semibold text-base"> Today </p>
+            <div className="flex flex-col gap-3 mb-3">
+              {myRecords[0].map((recordToday, index) => {
+                return (
+                  <OneRecord
+                    key={index}
+                    text={recordToday.text}
+                    image={recordToday.image}
+                    time={recordToday.time}
+                    color={recordToday.color}
+                    money={recordToday.money}
+                    iconColor={recordToday.iconColor}
+                  />
+                );
+              })}
+            </div>
+            <p className="font-semibold text-base"> Yesterday </p>
+            <div className="flex flex-col gap-3">
+              {myRecords[1].map((recordToday, index) => {
+                return (
+                  <OneRecord
+                    key={index}
+                    text={recordToday.text}
+                    image={recordToday.image}
+                    time={recordToday.time}
+                    color={recordToday.color}
+                    money={recordToday.money}
+                    iconColor={recordToday.iconColor}
+                  />
+                );
+              })}
+            </div>
+          </div>
         </div>
       </div>
     </div>
