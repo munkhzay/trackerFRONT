@@ -10,6 +10,7 @@ import FoodExpense from "../../public/icons/FoodExpenseIcon";
 
 const categories = [
   "Food & Drinks",
+  "Lending & Renting",
   "Shopping",
   "Housing",
   "Transportation",
@@ -21,7 +22,6 @@ const categories = [
   "Income",
   "Others",
 ];
-
 const records = [
   [
     {
@@ -116,10 +116,46 @@ const records = [
     },
   ],
 ];
-
+let checked = [
+  "true",
+  "true",
+  "true",
+  "true",
+  "true",
+  "true",
+  "true",
+  "true",
+  "true",
+  "true",
+  "true",
+  "true",
+];
 const Records = () => {
   const [selected, setSelected] = useState("All");
   const [myRecords, setRecords] = useState(records);
+
+  const [selectedCategories, setSelectedCategories] = useState(categories);
+  const [selectedEyes, setSelectedEyes] = useState(checked);
+
+  const [checkedCategories, setCheckedCategories] = useState(categories);
+  console.log(selectedEyes);
+  console.log(checkedCategories);
+  const handleCategory = (input, index) => {
+    let myCategories = [...selectedEyes];
+    if (input == "true") {
+      myCategories[index] = "false";
+    } else {
+      myCategories[index] = "true";
+    }
+    setSelectedEyes(myCategories);
+    let filteredCategories = [];
+    for (let i = 0; i < categories.length; i++) {
+      if (selectedEyes[i] == "true") {
+        filteredCategories.push(selectedCategories[i]);
+      }
+    }
+    setCheckedCategories(filteredCategories);
+  };
   const handleExpense = () => {
     const filtered = records.map((day) =>
       day.filter((oneRecord) => oneRecord.money.includes("-"))
@@ -130,6 +166,7 @@ const Records = () => {
     const filtered = records.map((day) =>
       day.filter((oneRecord) => oneRecord.money.includes("+"))
     );
+    console.log(filtered);
     setRecords(filtered);
   };
   const handleAll = () => {
@@ -142,7 +179,7 @@ const Records = () => {
     <div className="bg-[#F3F4F6] flex flex-col gap-8 items-center">
       <Navbar />
       <div className="flex gap-6">
-        <div className="bg-white flex flex-col px-6 py-4 w-[282px] gap-6 rounded-xl h-fit">
+        <div className="bg-white flex flex-col px-6 py-4 w-[282px] gap-6 rounded-xl h-fit border border-[#E5E7EB]">
           <div className="flex flex-col gap-6">
             <p> Records </p>
             <button className="flex gap-1 w-[225px] bg-[#0166FF] rounded-3xl text-white items-center justify-center">
@@ -193,7 +230,13 @@ const Records = () => {
             </div>
             <div className="flex flex-col gap-2">
               {categories.map((category1, index) => {
-                return <MyCategories key={index} categoryName={category1} />;
+                return (
+                  <div
+                    onClick={() => handleCategory(selectedEyes[index], index)}
+                  >
+                    <MyCategories key={index} categoryName={category1} />
+                  </div>
+                );
               })}
             </div>
             <div className="flex gap-2 py-1.5 pl-3 items-center">

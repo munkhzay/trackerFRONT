@@ -1,20 +1,60 @@
 import { IoClose } from "react-icons/io5";
+import { useState } from "react";
+import Drink from "../../public/icons/Drink";
+import Gift from "../../public/icons/Gift";
+import Shopping from "../../public/icons/Shopping";
+import Taxi from "../../public/icons/Taxi";
+import RentIcon from "../../public/icons/RentIcon";
+import FoodExpense from "../../public/icons/FoodExpenseIcon";
 
 const AddRecord = () => {
-  const today = Date.now();
+  const [incomeExpense, setIncomeExpense] = useState("Expense");
+
+  const handleRecord = () => {};
+
+  const handleIncomeOrExpense = (props) => {
+    const { name } = props;
+    setIncomeExpense(name);
+    if (incomeExpense === "Expense") {
+      setIncomeExpense("Income");
+    } else {
+      setIncomeExpense("Expense");
+    }
+  };
+
+  const Expensebackground = incomeExpense === "Expense" ? "#0166FF" : "#F3F4F6";
+  const Incomebackground = incomeExpense === "Income" ? "#16A34A" : "#F3F4F6";
+  const buttonColor = incomeExpense === "Income" ? "#16A34A" : "#0166FF";
+  const textColorIncome =
+    incomeExpense === "Income" ? "text-white" : "text-base";
+  const textColorExpense =
+    incomeExpense === "Expense" ? "text-white" : "text-base";
+
+  const today = new Date();
+  const day = String(today.getDate());
+  const year = String(today.getFullYear());
+  const month = "0" + String(today.getMonth());
+  const hour = String(today.getHours());
+  const minutes = String(today.getMinutes());
   return (
     <div className="w-[792px] flex flex-col rounded-xl  border-b border-[#E2E8F0]">
       <div className="py-5 px-6 flex justify-between">
         <p className="font-semibold text-xl">Add Record</p>
-        <IoClose width={24} height={24} />
+        <IoClose size={24} />
       </div>
       <div className="flex w-full">
         <div className="px-6 pt-5 pb-6 flex flex-col gap-5">
           <div className="rounded-[100px] bg-[#F3F4F6] flex gap-1">
-            <div className="py-2 px-[55.5px] font-normal text-base rounded-3xl bg-[#0166FF]">
+            <div
+              onClick={() => handleIncomeOrExpense("Expense")}
+              className={`py-2 px-[55.5px] ${textColorExpense} font-normal text-base rounded-3xl bg-[${Expensebackground}]`}
+            >
               Expense
             </div>
-            <div className="py-2 px-[55.5px] font-normal text-base rounded-3xl bg-[#16A34A]">
+            <div
+              onClick={() => handleIncomeOrExpense("Income")}
+              className={`py-2 px-[55.5px] ${textColorIncome} font-normal text-base rounded-3xl bg-[${Incomebackground}]`}
+            >
               Income
             </div>
           </div>
@@ -22,6 +62,7 @@ const AddRecord = () => {
             <div className="flex flex-col py-3 px-4 bg-[#F3F4F6] border border-[#D1D5DB] rounded-xl">
               <p className="font-normal text-base"> Amount </p>
               <input
+                type="number"
                 placeholder="₮ 000.00"
                 className="font-normal text-xl bg-[#F3F4F6]"
               />
@@ -30,6 +71,8 @@ const AddRecord = () => {
               <p> Category </p>
               <select className="bg-[#F9FAFB] py-3 px-4 text-base font-normal border border-[#D1D5DB] rounded-lg">
                 <option defaultChecked> Find or choose category</option>
+                <option className="px-[18px] py-2 flex gap-3">Food</option>
+                <option> Home </option>
               </select>
             </div>
             <div className="flex gap-2">
@@ -37,7 +80,7 @@ const AddRecord = () => {
                 <p>Date</p>
                 <input
                   type="date"
-                  value="2024-09-27"
+                  defaultValue={`${year}-${month}-${day}`}
                   className="py-3 px-4 bg-[#F9FAFB] border border-[#D1D5DB] rounded-lg"
                 />
               </div>
@@ -45,13 +88,16 @@ const AddRecord = () => {
                 <p>Time</p>
                 <input
                   type="time"
-                  value="15:30"
+                  defaultValue={`${hour}:${minutes}`}
                   className="py-3 px-4 bg-[#F9FAFB] border border-[#D1D5DB] rounded-lg"
                 />
               </div>
             </div>
           </div>
-          <button className="bg-[#0166FF] flex items-center justify-center py-2 rounded-3xl">
+          <button
+            onClick={() => handleRecord()}
+            className={`bg-[${buttonColor}] flex items-center justify-center py-2 rounded-3xl text-white`}
+          >
             Add Record
           </button>
         </div>
