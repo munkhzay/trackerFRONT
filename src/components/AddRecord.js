@@ -7,10 +7,9 @@ import Taxi from "../../public/icons/Taxi";
 import RentIcon from "../../public/icons/RentIcon";
 import FoodExpense from "../../public/icons/FoodExpenseIcon";
 
-const AddRecord = () => {
+const AddRecord = (props) => {
+  const { onCloseModal } = props;
   const [incomeExpense, setIncomeExpense] = useState("Expense");
-
-  const handleRecord = () => {};
 
   const handleIncomeOrExpense = (props) => {
     const { name } = props;
@@ -22,9 +21,12 @@ const AddRecord = () => {
     }
   };
 
+  const handleAdd = () => {};
+
   const Expensebackground = incomeExpense === "Expense" ? "#0166FF" : "#F3F4F6";
   const Incomebackground = incomeExpense === "Income" ? "#16A34A" : "#F3F4F6";
   const buttonColor = incomeExpense === "Income" ? "#16A34A" : "#0166FF";
+  console.log(buttonColor);
   const textColorIncome =
     incomeExpense === "Income" ? "text-white" : "text-base";
   const textColorExpense =
@@ -37,10 +39,10 @@ const AddRecord = () => {
   const hour = String(today.getHours());
   const minutes = String(today.getMinutes());
   return (
-    <div className="w-[792px] flex flex-col rounded-xl  border-b border-[#E2E8F0]">
+    <div className="w-[792px] flex flex-col rounded-xl  border-b border-[#E2E8F0] bg-slate-200">
       <div className="py-5 px-6 flex justify-between">
         <p className="font-semibold text-xl">Add Record</p>
-        <IoClose size={24} />
+        <IoClose size={24} onClick={onCloseModal} />
       </div>
       <div className="flex w-full">
         <div className="px-6 pt-5 pb-6 flex flex-col gap-5">
@@ -95,7 +97,7 @@ const AddRecord = () => {
             </div>
           </div>
           <button
-            onClick={() => handleRecord()}
+            onClick={() => handleAdd()}
             className={`bg-[${buttonColor}] flex items-center justify-center py-2 rounded-3xl text-white`}
           >
             Add Record
