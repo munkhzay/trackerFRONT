@@ -7,7 +7,7 @@ import { FaChevronLeft, FaSearchengin } from "react-icons/fa6";
 import { FaAngleRight } from "react-icons/fa6";
 import RentIcon from "../../public/icons/RentIcon";
 import FoodExpense from "../../public/icons/FoodExpenseIcon";
-
+import axios from "axios";
 import AddRecord from "@/components/AddRecord";
 
 const categories = [
@@ -142,8 +142,8 @@ const Home = () => {
   const [selectedEyes, setSelectedEyes] = useState(checked);
 
   const [checkedCategories, setCheckedCategories] = useState(categories);
-  console.log(selectedEyes);
-  console.log(checkedCategories);
+  // console.log(selectedEyes);
+  // console.log(checkedCategories);
   const handleCategory = (input, index) => {
     let myCategories = [...selectedEyes];
     if (input == "true") {
@@ -170,7 +170,7 @@ const Home = () => {
     const filtered = records.map((day) =>
       day.filter((oneRecord) => oneRecord.money.includes("+"))
     );
-    console.log(filtered);
+    // console.log(filtered);
     setRecords(filtered);
   };
   const handleAll = () => {
@@ -182,6 +182,10 @@ const Home = () => {
 
   const handleAdd = () => {
     setShowAdd(!showAdd);
+  };
+  const createCategory = async () => {
+    const { data } = await axios.get("http://localhost:${port}/api/category");
+    console.log(data);
   };
   // const opacity = showAdd === false ? "opacity-100" : "opacity-100";
   return (

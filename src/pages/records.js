@@ -142,8 +142,8 @@ const Records = () => {
   const [selectedEyes, setSelectedEyes] = useState(checked);
 
   const [checkedCategories, setCheckedCategories] = useState(categories);
-  console.log(selectedEyes);
-  console.log(checkedCategories);
+  selectedEyes;
+  // console.log(checkedCategories);
   const handleCategory = (input, index) => {
     let myCategories = [...selectedEyes];
     if (input == "true") {
@@ -170,7 +170,7 @@ const Records = () => {
     const filtered = records.map((day) =>
       day.filter((oneRecord) => oneRecord.money.includes("+"))
     );
-    console.log(filtered);
+    // console.log(filtered);
     setRecords(filtered);
   };
   const handleAll = () => {

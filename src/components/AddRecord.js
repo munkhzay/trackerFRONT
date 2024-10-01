@@ -26,7 +26,7 @@ const AddRecord = (props) => {
   const Expensebackground = incomeExpense === "Expense" ? "#0166FF" : "#F3F4F6";
   const Incomebackground = incomeExpense === "Income" ? "#16A34A" : "#F3F4F6";
   const buttonColor = incomeExpense === "Income" ? "#16A34A" : "#0166FF";
-  console.log(buttonColor);
+  // console.log(buttonColor);
   const textColorIncome =
     incomeExpense === "Income" ? "text-white" : "text-base";
   const textColorExpense =
