@@ -9,6 +9,9 @@ import RentIcon from "../../public/icons/RentIcon";
 import FoodExpense from "../../public/icons/FoodExpenseIcon";
 import axios from "axios";
 import AddRecord from "@/components/AddRecord";
+import Profile from "@/components/Categories";
+import Records from "./records";
+import Record, { Recor } from "@/components/Records";
 
 const categories = [
   "Food & Drinks",
@@ -183,10 +186,10 @@ const Home = () => {
   const handleAdd = () => {
     setShowAdd(!showAdd);
   };
-  const createCategory = async () => {
-    const { data } = await axios.get("http://localhost:${port}/api/category");
-    console.log(data);
-  };
+  // const createCategory = async () => {
+  //   const { data } = await axios.get("http://localhost:${port}/api/category");
+  //   console.log(data);
+  // };
   // const opacity = showAdd === false ? "opacity-100" : "opacity-100";
   return (
     // <div className="flex justify-center items-center flex-col">
@@ -255,7 +258,8 @@ const Home = () => {
                 <p className="font-normal text-base opacity-20"> Clear </p>
               </div>
               <div className="flex flex-col gap-2">
-                {categories.map((category1, index) => {
+                <Profile />
+                {/* {categories.map((category1, index) => {
                   return (
                     <div
                       onClick={() => handleCategory(selectedEyes[index], index)}
@@ -263,7 +267,7 @@ const Home = () => {
                       <MyCategories key={index} categoryName={category1} />
                     </div>
                   );
-                })}
+                })} */}
               </div>
               <div className="flex gap-2 py-1.5 pl-3 items-center">
                 <PlusSign color={"#0166FF"} />
@@ -291,21 +295,22 @@ const Home = () => {
               <p className="font-semibold text-base"> Today </p>
               <div className="flex flex-col gap-3 mb-3">
                 {myRecords[0].map((recordToday, index) => {
-                  return (
-                    <OneRecord
-                      key={index}
-                      text={recordToday.text}
-                      image={recordToday.image}
-                      time={recordToday.time}
-                      color={recordToday.color}
-                      money={recordToday.money}
-                      iconColor={recordToday.iconColor}
-                    />
-                  );
+                  return <Recor />;
+                  // <OneRecord
+                  //   key={index}
+                  //   text={recordToday.text}
+                  //   image={recordToday.image}
+                  //   time={recordToday.time}
+                  //   color={recordToday.color}
+                  //   money={recordToday.money}
+                  //   iconColor={recordToday.iconColor}
+                  // />
+                  // );
                 })}
               </div>
               <p className="font-semibold text-base"> Yesterday </p>
               <div className="flex flex-col gap-3">
+                {/* <Records /> */}
                 {myRecords[1].map((recordToday, index) => {
                   return (
                     <OneRecord

@@ -6,11 +6,13 @@ import Shopping from "../../public/icons/Shopping";
 import Taxi from "../../public/icons/Taxi";
 import RentIcon from "../../public/icons/RentIcon";
 import FoodExpense from "../../public/icons/FoodExpenseIcon";
-
+import axios from "axios";
 const AddRecord = (props) => {
   const { onCloseModal } = props;
   const [incomeExpense, setIncomeExpense] = useState("Expense");
-
+  const [value, setValue] = useState("");
+  const [amount, setAmount] = useState();
+  const [select, setSelect] = useState("");
   const handleIncomeOrExpense = (props) => {
     const { name } = props;
     setIncomeExpense(name);
@@ -21,8 +23,31 @@ const AddRecord = (props) => {
     }
   };
 
-  const handleAdd = () => {};
-
+  const handleAdd = (e) => {
+    setValue(e.target.value);
+  };
+  const handleAdd2 = (e) => {
+    setAmount(e.target.value);
+  };
+  const createCategory = async () => {
+    const data = await axios.post("http://localhost:8070/api/transaction", {
+      // email: "munkhuu",
+      // username: "munkh",
+      // userpassword: 1,
+      // avatar_img: "avatar",
+      userid: 41,
+      recordname: "",
+      amount: amount,
+      description: value,
+      categoryid: 12,
+      transaction: incomeExpense,
+    });
+    console.log(data);
+  };
+  const Selectitem = (e) => {
+    // const selected = e;
+    console.log(e);
+  };
   const Expensebackground = incomeExpense === "Expense" ? "#0166FF" : "#F3F4F6";
   const Incomebackground = incomeExpense === "Income" ? "#16A34A" : "#F3F4F6";
   const buttonColor = incomeExpense === "Income" ? "#16A34A" : "#0166FF";
@@ -64,6 +89,7 @@ const AddRecord = (props) => {
             <div className="flex flex-col py-3 px-4 bg-[#F3F4F6] border border-[#D1D5DB] rounded-xl">
               <p className="font-normal text-base"> Amount </p>
               <input
+                onChange={handleAdd2}
                 type="number"
                 placeholder="₮ 000.00"
                 className="font-normal text-xl bg-[#F3F4F6]"
@@ -71,7 +97,10 @@ const AddRecord = (props) => {
             </div>
             <div className="flex flex-col gap-2">
               <p> Category </p>
-              <select className="bg-[#F9FAFB] py-3 px-4 text-base font-normal border border-[#D1D5DB] rounded-lg">
+              <select
+                onChange={Selectitem}
+                className="bg-[#F9FAFB] py-3 px-4 text-base font-normal border border-[#D1D5DB] rounded-lg"
+              >
                 <option defaultChecked> Find or choose category</option>
                 <option className="px-[18px] py-2 flex gap-3">Food</option>
                 <option> Home </option>
@@ -97,7 +126,8 @@ const AddRecord = (props) => {
             </div>
           </div>
           <button
-            onClick={() => handleAdd()}
+            onClick={createCategory}
+            // onClick={() => handleAdd()}
             className={`bg-[${buttonColor}] flex items-center justify-center py-2 rounded-3xl text-white`}
           >
             Add Record
@@ -106,6 +136,7 @@ const AddRecord = (props) => {
         <div className="flex flex-col gap-2 px-6 pb-6 pt-[18px] w-full ">
           <p className="text-[#1F2937]">Description</p>
           <textarea
+            onChange={handleAdd}
             placeholder="Write here"
             className="bg-[#F3F4F6] pt-4 pl-4 border border-[#D1D5DB] w-full h-full rounded-lg"
           />
