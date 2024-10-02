@@ -1,5 +1,5 @@
 import { IoClose } from "react-icons/io5";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Drink from "../../public/icons/Drink";
 import Gift from "../../public/icons/Gift";
 import Shopping from "../../public/icons/Shopping";
@@ -13,6 +13,8 @@ const AddRecord = (props) => {
   const [value, setValue] = useState("");
   const [amount, setAmount] = useState();
   const [select, setSelect] = useState("");
+  const [getRecord, setGetRecord] = useState("");
+
   const handleIncomeOrExpense = (props) => {
     const { name } = props;
     setIncomeExpense(name);
@@ -29,24 +31,45 @@ const AddRecord = (props) => {
   const handleAdd2 = (e) => {
     setAmount(e.target.value);
   };
-  const createCategory = async () => {
-    const data = await axios.post("http://localhost:8070/api/transaction", {
-      // email: "munkhuu",
-      // username: "munkh",
-      // userpassword: 1,
-      // avatar_img: "avatar",
-      userid: 41,
-      recordname: "",
-      amount: amount,
-      description: value,
-      categoryid: 12,
-      transaction: incomeExpense,
-    });
-    console.log(data);
+  const handleAdd3 = (e) => {
+    setName(e.target.value);
   };
+  const createCategory = async () => {
+    await axios
+      .post("http://localhost:8070/api/transaction", {
+        userid: 51,
+        recordname: select,
+        amount: amount,
+        transaction: incomeExpense,
+        description: value,
+        categoryid: 15,
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
+  useEffect(() => {
+    async function getUser() {
+      try {
+        const response = await axios.get(
+          "http://localhost:8070/api/transaction"
+        );
+        console.log(response);
+        setGetRecord(response?.data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    getUser();
+  }, []);
+
+  console.log(getRecord);
   const Selectitem = (e) => {
-    // const selected = e;
-    console.log(e);
+    setSelect(e.target.value);
   };
   const Expensebackground = incomeExpense === "Expense" ? "#0166FF" : "#F3F4F6";
   const Incomebackground = incomeExpense === "Income" ? "#16A34A" : "#F3F4F6";
@@ -87,6 +110,15 @@ const AddRecord = (props) => {
           </div>
           <div className="flex flex-col mb-3 gap-[22px]">
             <div className="flex flex-col py-3 px-4 bg-[#F3F4F6] border border-[#D1D5DB] rounded-xl">
+              <p className="font-normal text-base"> Name </p>
+              <input
+                onChange={handleAdd3}
+                type="text"
+                placeholder="Name"
+                className="font-normal text-xl bg-[#F3F4F6]"
+              />
+            </div>
+            <div className="flex flex-col py-3 px-4 bg-[#F3F4F6] border border-[#D1D5DB] rounded-xl">
               <p className="font-normal text-base"> Amount </p>
               <input
                 onChange={handleAdd2}
@@ -98,12 +130,20 @@ const AddRecord = (props) => {
             <div className="flex flex-col gap-2">
               <p> Category </p>
               <select
-                onChange={Selectitem}
+                // onChange={Selectitem}
                 className="bg-[#F9FAFB] py-3 px-4 text-base font-normal border border-[#D1D5DB] rounded-lg"
               >
-                <option defaultChecked> Find or choose category</option>
-                <option className="px-[18px] py-2 flex gap-3">Food</option>
-                <option> Home </option>
+                <option value="Find or choose category" defaultChecked>
+                  {" "}
+                  Find or choose category
+                </option>
+                {/* {getRecord.map((record) => {
+                  return <option>{record.recordname}</option>;
+                })} */}
+                <option value="Food" className="px-[18px] py-2 flex gap-3">
+                  Food
+                </option>
+                <option value="Home"> Home </option>
               </select>
             </div>
             <div className="flex gap-2">

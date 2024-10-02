@@ -10,8 +10,7 @@ import FoodExpense from "../../public/icons/FoodExpenseIcon";
 import axios from "axios";
 import AddRecord from "@/components/AddRecord";
 import Profile from "@/components/Categories";
-import Records from "./records";
-import Record, { Recor } from "@/components/Records";
+import Recor from "@/components/Records";
 
 const categories = [
   "Food & Drinks",
@@ -294,8 +293,9 @@ const Home = () => {
             <div className="flex flex-col gap-3">
               <p className="font-semibold text-base"> Today </p>
               <div className="flex flex-col gap-3 mb-3">
-                {myRecords[0].map((recordToday, index) => {
-                  return <Recor />;
+                <Recor />
+                {/* {myRecords[0].map((recordToday, index) => {
+                  return 
                   // <OneRecord
                   //   key={index}
                   //   text={recordToday.text}
@@ -306,12 +306,12 @@ const Home = () => {
                   //   iconColor={recordToday.iconColor}
                   // />
                   // );
-                })}
+                })} */}
               </div>
               <p className="font-semibold text-base"> Yesterday </p>
               <div className="flex flex-col gap-3">
-                {/* <Records /> */}
-                {myRecords[1].map((recordToday, index) => {
+                <Recor />
+                {/* {myRecords[1].map((recordToday, index) => {
                   return (
                     <OneRecord
                       key={index}
@@ -323,7 +323,7 @@ const Home = () => {
                       iconColor={recordToday.iconColor}
                     />
                   );
-                })}
+                })} */}
               </div>
             </div>
           </div>

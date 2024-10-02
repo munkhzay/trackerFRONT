@@ -9,7 +9,7 @@ const Profile = () => {
     "http://localhost:8070/api/category",
     fetcher
   );
-  console.log(data?.category);
+  //   console.log(data);
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Failed to load</div>;
   //   useEffect(() => {
@@ -21,7 +21,7 @@ const Profile = () => {
   //   });
   return (
     <div>
-      {data?.category.map((item, index) => {
+      {data.map((item, index) => {
         return (
           <MyCategories
             key={item.index}
