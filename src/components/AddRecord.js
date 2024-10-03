@@ -15,7 +15,7 @@ const AddRecord = (props) => {
   const [select, setSelect] = useState();
   const [categories, setCategories] = useState([]);
   const [name, setName] = useState("");
-  console.log(select);
+ 
 
   const handleIncomeOrExpense = (props) => {
     const { name } = props;
@@ -26,7 +26,6 @@ const AddRecord = (props) => {
       setIncomeExpense("Expense");
     }
   };
-
   const handleAdd = (e) => {
     setValue(e.target.value);
   };
@@ -44,7 +43,7 @@ const AddRecord = (props) => {
         amount: amount,
         transaction: incomeExpense,
         description: value,
-        categoryid: 15,
+        categoryid: select,
       })
       .then(function (response) {
         console.log(response);
@@ -73,17 +72,10 @@ const AddRecord = (props) => {
     getcategory();
   }, []);
 
-  // useEffect(() => {
-  //   const getuser = async () => {
-  //     const { data } = await axios.get("http://localhost:8070/api/transaction");
-  //     setCategories(data.data);
-  //   };
-  //   getuser();
-  // }, []);
-
   const Selectitem = (e) => {
-    setSelect();
+    setSelect(e.target.value);
   };
+   console.log(select);
   const Expensebackground = incomeExpense === "Expense" ? "#0166FF" : "#F3F4F6";
   const Incomebackground = incomeExpense === "Income" ? "#16A34A" : "#F3F4F6";
   const buttonColor = incomeExpense === "Income" ? "#16A34A" : "#0166FF";
@@ -143,24 +135,28 @@ const AddRecord = (props) => {
             <div className="flex flex-col gap-2">
               <p> Category </p>
               <select
-                // onChange={Selectitem}
+            onChange={Selectitem} 
+          
                 className="bg-[#F9FAFB] py-3 px-4 text-base font-normal border border-[#D1D5DB] rounded-lg"
               >
                 <option value="Find or choose category" defaultChecked>
                   {" "}
                   Find or choose category
                 </option>
+                
                 {categories.map((record) => {
+                console.log(select)
                   return (
-                    <option value={(record) => setSelect(record.categoryid)}>
+                    <option value={record.categoryid}>
                       {record.categoryname}
+                      
                     </option>
                   );
                 })}
-                <option value="Food" className="px-[18px] py-2 flex gap-3">
+                {/* <option value="Food" className="px-[18px] py-2 flex gap-3">
                   Food
-                </option>
-                <option value="Home"> Home </option>
+                </option> */}
+                {/* <option value="Home"> Home </option> */}
               </select>
             </div>
             <div className="flex gap-2">

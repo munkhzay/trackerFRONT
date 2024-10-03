@@ -31,14 +31,14 @@ const SignUp = () => {
       username: name,
       userpassword: password,
       avatar_img: rePassword,
-    });
-    localStorage
-      .setItem("userid", response.data.users)
+    })
       .then(function (response) {
-        console.log(response);
+        console.log(response);   
+        localStorage.setItem("userid", response.data[0].userid)
         if (password != rePassword) return toast("password error");
         if (password.length <= 7) return toast("password urt baga bainaa");
         else return router.push("/signIn");
+      
       })
       .catch(function (error) {
         console.log(error);

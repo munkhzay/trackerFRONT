@@ -18,8 +18,8 @@ const SignIn = () => {
         userpassword: password,
       })
       .then(function (response) {
-        console.log(response.data.length);
-        if (response.data.length === 1) return router.push("/");
+        console.log(response.data.user.length);
+        if (response.data.user.length === 1) return router.push("/");
         else return toast("unsuccesful");
       })
       .catch(function (error) {

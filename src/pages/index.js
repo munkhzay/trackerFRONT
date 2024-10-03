@@ -12,20 +12,6 @@ import AddRecord from "@/components/AddRecord";
 import Profile from "@/components/Categories";
 import Recor from "@/components/Records";
 
-const categories = [
-  "Food & Drinks",
-  "Lending & Renting",
-  "Shopping",
-  "Housing",
-  "Transportation",
-  "Vehicle",
-  "Life & Entertainment",
-  "Communication, PC",
-  "Financial expenses",
-  "Investments",
-  "Income",
-  "Others",
-];
 const records = [
   [
     {
@@ -120,30 +106,16 @@ const records = [
     },
   ],
 ];
-let checked = [
-  "true",
-  "true",
-  "true",
-  "true",
-  "true",
-  "true",
-  "true",
-  "true",
-  "true",
-  "true",
-  "true",
-  "true",
-];
 const Home = () => {
   const [showAdd, setShowAdd] = useState(false);
 
   const [selected, setSelected] = useState("All");
   const [myRecords, setRecords] = useState(records);
 
-  const [selectedCategories, setSelectedCategories] = useState(categories);
-  const [selectedEyes, setSelectedEyes] = useState(checked);
+  // const [selectedCategories, setSelectedCategories] = useState(categories);
+  // const [selectedEyes, setSelectedEyes] = useState(checked);
 
-  const [checkedCategories, setCheckedCategories] = useState(categories);
+  // const [checkedCategories, setCheckedCategories] = useState(categories);
   // console.log(selectedEyes);
   // console.log(checkedCategories);
   const handleCategory = (input, index) => {
