@@ -2,31 +2,15 @@ import Link from "next/link";
 import Logo from "../../public/icons/Logo";
 import { useState } from "react";
 import axios from "axios";
+import { toast, Toaster } from "sonner";
+import { useRouter } from "next/router";
 
 const SignUp = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rePassword, setRePassword] = useState("");
-
-  const signUpClick = () => {
-    const information = {
-      name: name,
-      email: email,
-      password: password,
-    };
-    if (password !== rePassword) {
-      console.log("Davtsan password buruu baina");
-    } else {
-    }
-    axios.post("http://localhost:8000/user", {
-      email: email,
-      name: name,
-      password: password,
-      avatar_img: "https://i.pravatar.cc/300",
-    });
-  };
-
+  const router = useRouter();
   const handleName = (event) => {
     setName(event.target.value);
   };
@@ -40,6 +24,27 @@ const SignUp = () => {
   const handleRePassword = (event) => {
     setRePassword(event.target.value);
   };
+
+  const createUser = async () => {
+    await axios.post("http://localhost:8070/api/signup", {
+      email: email,
+      username: name,
+      userpassword: password,
+      avatar_img: rePassword,
+    });
+    localStorage
+      .setItem("userid", response.data.users)
+      .then(function (response) {
+        console.log(response);
+        if (password != rePassword) return toast("password error");
+        if (password.length <= 7) return toast("password urt baga bainaa");
+        else return router.push("/signIn");
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
   return (
     <div className="flex w-screen h-screen">
       <div className="w-3/5 bg-[#FFFFFF] flex  justify-center items-center">
@@ -83,8 +88,9 @@ const SignUp = () => {
               className="px-4 py-3 w-full rounded-lg bg-[#F3F4F6] border border-[#D1D5DB]"
               placeholder="Re-password"
             />
+            <Toaster />
             <button
-              onClick={() => signUpClick()}
+              onClick={createUser}
               className="bg-[#0166FF] justify-center font-normal text-xl flex items-center text-white text-center py-2.5 w-full rounded-3xl"
             >
               Sign up
@@ -106,3 +112,21 @@ const SignUp = () => {
 };
 
 export default SignUp;
+
+// const signUpClick = () => {
+//   const information = {
+//     name: name,
+//     email: email,
+//     password: password,
+//   };
+//   if (password !== rePassword) {
+//     console.log("Davtsan password buruu baina");
+//   } else {
+//   }
+//   axios.post("http://localhost:8000/user", {
+//     email: email,
+//     name: name,
+//     password: password,
+//     avatar_img: "https://i.pravatar.cc/300",
+//   });
+// };

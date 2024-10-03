@@ -1,29 +1,32 @@
 import axios from "axios";
 import Logo from "../../public/icons/Logo";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { Router, useRouter } from "next/navigation";
+import { toast, Toaster } from "sonner";
 
-// async function Login() {
-//   try {
-//     const response = await axios.get("");
-//     console.log(response);
-//   } catch (error) {
-//     console.error(error);
-//   }
-// }
-const Login = async () => {
-  await axios
-    .post("http://localhost:8070/api/singIn", {
-      email: "Fred",
-      userpassword: "Flintstone",
-    })
-    .then(function (response) {
-      console.log(response);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-};
 const SignIn = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const router = useRouter();
+  console.log(email);
+
+  const Login = async () => {
+    await axios
+      .post("http://localhost:8070/api/signIn", {
+        email: email,
+        userpassword: password,
+      })
+      .then(function (response) {
+        console.log(response.data.length);
+        if (response.data.length === 1) return router.push("/");
+        else return toast("unsuccesful");
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
   return (
     <div className="flex w-screen h-screen">
       <div className="w-3/5 bg-[#FFFFFF] flex  justify-center items-center">
@@ -42,13 +45,16 @@ const SignIn = () => {
           </div>
           <div className="flex flex-col gap-4 w-full">
             <input
+              onChange={(e) => setEmail(e.target.value)}
               className="px-4 py-3 w-full rounded-lg bg-[#F3F4F6] border border-[#D1D5DB]"
               placeholder="Email"
             />
             <input
+              onChange={(e) => setPassword(e.target.value)}
               className="px-4 py-3 w-full rounded-lg bg-[#F3F4F6] border border-[#D1D5DB]"
               placeholder="Password"
             />
+            <Toaster />
             <button
               onClick={() => Login()}
               className="bg-[#0166FF] justify-center font-normal text-xl flex items-center text-white text-center py-2.5 w-full rounded-3xl"

@@ -1,27 +1,23 @@
 import useSWR from "swr";
 import MyCategories from "./Category";
 import { useEffect, useState } from "react";
-
-const fetcher = (...args) => fetch(...args).then((res) => res.json());
+import axios from "axios";
 
 const Profile = () => {
-  const { data, isLoading, error } = useSWR(
-    "http://localhost:8070/api/category",
-    fetcher
-  );
+  const [category, setCategory] = useState([]);
   //   console.log(data);
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Failed to load</div>;
-  //   useEffect(() => {
-  //     const getCategories = async () => {
-  //       const { data } = await axios.get("http://localhost:8070/api/category");
-  //       setCategories(data.category);
-  //     };
-  // console.log(categories);
-  //   });
+
+  useEffect(() => {
+    const getCategories = async () => {
+      const { data } = await axios.get("http://localhost:8070/api/category");
+      setCategory(data);
+    };
+    getCategories();
+  }, []);
+
   return (
     <div>
-      {data.map((item, index) => {
+      {category.map((item) => {
         return (
           <MyCategories
             key={item.index}

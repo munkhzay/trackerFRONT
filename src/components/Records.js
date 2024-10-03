@@ -4,7 +4,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 // const fetcher = (...args) => fetch(...args).then((res) => res.json());
 const Recor = () => {
-  const [record, setRecord] = useState();
+  const [record, setRecord] = useState([]);
   //   console.log(record);
 
   //   const { data, isLoading, error } = useSWR(
@@ -17,18 +17,11 @@ const Recor = () => {
   //   console.log(data?.data);
 
   useEffect(() => {
-    async function getUser() {
-      try {
-        const response = await axios.get(
-          "http://localhost:8070/api/transaction"
-        );
-
-        setRecord(response?.data);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    getUser();
+    const getrecord = async () => {
+      const data = await axios.get("http://localhost:8070/api/transaction");
+      setRecord(data.data);
+    };
+    getrecord();
   }, []);
 
   return (
@@ -38,7 +31,7 @@ const Recor = () => {
           <OneRecord
             time={item.userid}
             text={item.recordname}
-            image={item.description}
+            // image={item.description}
             // time={record.time}
             color={record.color}
             money={item.amount}

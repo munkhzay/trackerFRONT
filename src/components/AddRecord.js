@@ -12,8 +12,10 @@ const AddRecord = (props) => {
   const [incomeExpense, setIncomeExpense] = useState("Expense");
   const [value, setValue] = useState("");
   const [amount, setAmount] = useState();
-  const [select, setSelect] = useState("");
-  const [getRecord, setGetRecord] = useState("");
+  const [select, setSelect] = useState();
+  const [categories, setCategories] = useState([]);
+  const [name, setName] = useState("");
+  console.log(select);
 
   const handleIncomeOrExpense = (props) => {
     const { name } = props;
@@ -38,7 +40,7 @@ const AddRecord = (props) => {
     await axios
       .post("http://localhost:8070/api/transaction", {
         userid: 51,
-        recordname: select,
+        recordname: name,
         amount: amount,
         transaction: incomeExpense,
         description: value,
@@ -51,25 +53,36 @@ const AddRecord = (props) => {
         console.log(error);
       });
   };
-
   useEffect(() => {
-    async function getUser() {
-      try {
-        const response = await axios.get(
-          "http://localhost:8070/api/transaction"
-        );
-        console.log(response);
-        setGetRecord(response?.data);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    getUser();
+    const getcategory = async () => {
+      await axios
+        .get("http://localhost:8070/api/category")
+        .then(function (response) {
+          // handle success
+
+          setCategories(response.data);
+        })
+        .catch(function (error) {
+          // handle error
+          console.log(error);
+        })
+        .finally(function () {
+          // always executed
+        });
+    };
+    getcategory();
   }, []);
 
-  console.log(getRecord);
+  // useEffect(() => {
+  //   const getuser = async () => {
+  //     const { data } = await axios.get("http://localhost:8070/api/transaction");
+  //     setCategories(data.data);
+  //   };
+  //   getuser();
+  // }, []);
+
   const Selectitem = (e) => {
-    setSelect(e.target.value);
+    setSelect();
   };
   const Expensebackground = incomeExpense === "Expense" ? "#0166FF" : "#F3F4F6";
   const Incomebackground = incomeExpense === "Income" ? "#16A34A" : "#F3F4F6";
@@ -137,9 +150,13 @@ const AddRecord = (props) => {
                   {" "}
                   Find or choose category
                 </option>
-                {/* {getRecord.map((record) => {
-                  return <option>{record.recordname}</option>;
-                })} */}
+                {categories.map((record) => {
+                  return (
+                    <option value={(record) => setSelect(record.categoryid)}>
+                      {record.categoryname}
+                    </option>
+                  );
+                })}
                 <option value="Food" className="px-[18px] py-2 flex gap-3">
                   Food
                 </option>
