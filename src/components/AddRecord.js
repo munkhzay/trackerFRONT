@@ -15,7 +15,6 @@ const AddRecord = (props) => {
   const [select, setSelect] = useState();
   const [categories, setCategories] = useState([]);
   const [name, setName] = useState("");
- 
 
   const handleIncomeOrExpense = (props) => {
     const { name } = props;
@@ -75,7 +74,7 @@ const AddRecord = (props) => {
   const Selectitem = (e) => {
     setSelect(e.target.value);
   };
-   console.log(select);
+  console.log(select);
   const Expensebackground = incomeExpense === "Expense" ? "#0166FF" : "#F3F4F6";
   const Incomebackground = incomeExpense === "Income" ? "#16A34A" : "#F3F4F6";
   const buttonColor = incomeExpense === "Income" ? "#16A34A" : "#0166FF";
@@ -135,21 +134,18 @@ const AddRecord = (props) => {
             <div className="flex flex-col gap-2">
               <p> Category </p>
               <select
-            onChange={Selectitem} 
-          
+                onChange={Selectitem}
                 className="bg-[#F9FAFB] py-3 px-4 text-base font-normal border border-[#D1D5DB] rounded-lg"
               >
                 <option value="Find or choose category" defaultChecked>
                   {" "}
                   Find or choose category
                 </option>
-                
                 {categories.map((record) => {
-                console.log(select)
+                  console.log(select);
                   return (
                     <option value={record.categoryid}>
                       {record.categoryname}
-                      
                     </option>
                   );
                 })}

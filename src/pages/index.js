@@ -11,7 +11,9 @@ import axios from "axios";
 import AddRecord from "@/components/AddRecord";
 import Profile from "@/components/Categories";
 import Recor from "@/components/Records";
-
+import Link from "next/link";
+import newCategories from "@/components/newCategory";
+import NewCategories from "@/components/newCategory";
 const records = [
   [
     {
@@ -108,7 +110,7 @@ const records = [
 ];
 const Home = () => {
   const [showAdd, setShowAdd] = useState(false);
-
+  const [showcategory, setShowcategory] = useState(false);
   const [selected, setSelected] = useState("All");
   const [myRecords, setRecords] = useState(records);
 
@@ -157,6 +159,9 @@ const Home = () => {
   const handleAdd = () => {
     setShowAdd(!showAdd);
   };
+  const handlecategory = () => {
+    setShowcategory(!showcategory);
+  };
   // const createCategory = async () => {
   //   const { data } = await axios.get("http://localhost:${port}/api/category");
   //   console.log(data);
@@ -168,6 +173,11 @@ const Home = () => {
       {showAdd && (
         <div className="z-30 fixed top-0 left-0 right-0 bottom-0 bg-gray-400 flex justify-center items-center">
           <AddRecord onCloseModal={handleAdd} />
+        </div>
+      )}
+      {showcategory && (
+        <div className="z-30 fixed top-0 left-0 right-0 bottom-0 bg-white flex justify-center items-center">
+          <NewCategories onCloseModal={handlecategory} />
         </div>
       )}
       <div className={`bg-[#F3F4F6] flex flex-col gap-8 items-center relative`}>
@@ -239,11 +249,14 @@ const Home = () => {
                     </div>
                   );
                 })} */}
-              </div>
-              <div className="flex gap-2 py-1.5 pl-3 items-center">
-                <PlusSign color={"#0166FF"} />
-                <p>Add category </p>
-              </div>
+              </div>{" "}
+              <button onClick={handlecategory}>
+                <div className="flex gap-2 py-1.5 pl-3 items-center">
+                  {" "}
+                  <PlusSign color={"#0166FF"} />
+                  Add category
+                </div>{" "}
+              </button>
             </div>
           </div>
           <div className="w-[894px] flex flex-col gap-4">

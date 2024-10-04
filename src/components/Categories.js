@@ -5,6 +5,7 @@ import axios from "axios";
 
 const Profile = () => {
   const [category, setCategory] = useState([]);
+  // const [cateid, setCateid] = useState("");
   //   console.log(data);
 
   useEffect(() => {
@@ -15,6 +16,7 @@ const Profile = () => {
     getCategories();
   }, []);
 
+  // console.log(cateid);
   return (
     <div>
       {category.map((item) => {
@@ -23,6 +25,7 @@ const Profile = () => {
             key={item.index}
             categoryName={item.categoryname}
             description={item.description}
+            categoryid={item.categoryid}
           />
         );
       })}
