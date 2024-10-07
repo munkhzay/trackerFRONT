@@ -1,13 +1,19 @@
-const OneRecord = (props) => {
-  const { text, image, time, color, money, iconColor } = props;
+import FoodExpense from "../../public/icons/FoodExpenseIcon";
+import RentIcon from "../../public/icons/RentIcon";
 
+const OneRecord = (props) => {
+  const { text, image, time, color, money, transaction_type } = props;
+  const iconcolor = transaction_type === "Expence" ? "#F54949" : "#23E01F";
+  const IconImg =
+    transaction_type === "Expense" ? <RentIcon /> : <FoodExpense />;
   return (
     <div className="w-full px-6 py-3 border bg-white border-[#E5E7EB] items-center justify-between flex rounded-xl">
       <div className="flex gap-4">
         <div
-          className={`flex justify-center items-center w-10 h-10 rounded-full bg-[${iconColor}]`}
+          className={`flex justify-center items-center w-10 h-10 rounded-full`}
+          style={{ backgroundColor: iconcolor }}
         >
-          {image}
+          {IconImg}
         </div>
 
         <div className="flex flex-col">

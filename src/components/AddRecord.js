@@ -7,6 +7,7 @@ import Taxi from "../../public/icons/Taxi";
 import RentIcon from "../../public/icons/RentIcon";
 import FoodExpense from "../../public/icons/FoodExpenseIcon";
 import axios from "axios";
+import { useRouter } from "next/router";
 const AddRecord = (props) => {
   const { onCloseModal } = props;
   const [incomeExpense, setIncomeExpense] = useState("Expense");
@@ -15,7 +16,7 @@ const AddRecord = (props) => {
   const [select, setSelect] = useState();
   const [categories, setCategories] = useState([]);
   const [name, setName] = useState("");
-
+  const router = useRouter();
   const handleIncomeOrExpense = (props) => {
     const { name } = props;
     setIncomeExpense(name);
@@ -25,15 +26,16 @@ const AddRecord = (props) => {
       setIncomeExpense("Expense");
     }
   };
-  const handleAdd = (e) => {
-    setValue(e.target.value);
-  };
-  const handleAdd2 = (e) => {
-    setAmount(e.target.value);
-  };
-  const handleAdd3 = (e) => {
-    setName(e.target.value);
-  };
+  // const handleAdd = (e) => {
+  //   setValue(e.target.value);
+  // };
+
+  // const handleAdd2 = (e) => {
+  //   setAmount(e.target.value);
+  // };
+  // const handleAdd3 = (e) => {
+  //   setName(e.target.value);
+  // };
   const createCategory = async () => {
     await axios
       .post("http://localhost:8070/api/transaction", {
@@ -46,11 +48,13 @@ const AddRecord = (props) => {
       })
       .then(function (response) {
         console.log(response);
+        router.push("/");
       })
       .catch(function (error) {
         console.log(error);
       });
   };
+  console.log(select);
   useEffect(() => {
     const getcategory = async () => {
       await axios
@@ -71,10 +75,10 @@ const AddRecord = (props) => {
     getcategory();
   }, []);
 
-  const Selectitem = (e) => {
-    setSelect(e.target.value);
-  };
-  console.log(select);
+  // const Selectitem = (e) => {
+  //   setSelect(e.target.value);
+  // };
+  // console.log(select);
   const Expensebackground = incomeExpense === "Expense" ? "#0166FF" : "#F3F4F6";
   const Incomebackground = incomeExpense === "Income" ? "#16A34A" : "#F3F4F6";
   const buttonColor = incomeExpense === "Income" ? "#16A34A" : "#0166FF";
@@ -83,7 +87,6 @@ const AddRecord = (props) => {
     incomeExpense === "Income" ? "text-white" : "text-base";
   const textColorExpense =
     incomeExpense === "Expense" ? "text-white" : "text-base";
-
   const today = new Date();
   const day = String(today.getDate());
   const year = String(today.getFullYear());
@@ -116,7 +119,7 @@ const AddRecord = (props) => {
             <div className="flex flex-col py-3 px-4 bg-[#F3F4F6] border border-[#D1D5DB] rounded-xl">
               <p className="font-normal text-base"> Name </p>
               <input
-                onChange={handleAdd3}
+                onChange={(e) => setName(e.target.value)}
                 type="text"
                 placeholder="Name"
                 className="font-normal text-xl bg-[#F3F4F6]"
@@ -125,7 +128,7 @@ const AddRecord = (props) => {
             <div className="flex flex-col py-3 px-4 bg-[#F3F4F6] border border-[#D1D5DB] rounded-xl">
               <p className="font-normal text-base"> Amount </p>
               <input
-                onChange={handleAdd2}
+                onChange={(e) => setAmount(e.target.value)}
                 type="number"
                 placeholder="₮ 000.00"
                 className="font-normal text-xl bg-[#F3F4F6]"
@@ -134,7 +137,7 @@ const AddRecord = (props) => {
             <div className="flex flex-col gap-2">
               <p> Category </p>
               <select
-                onChange={Selectitem}
+                onChange={(e) => setSelect(e.target.value)}
                 className="bg-[#F9FAFB] py-3 px-4 text-base font-normal border border-[#D1D5DB] rounded-lg"
               >
                 <option value="Find or choose category" defaultChecked>
@@ -142,7 +145,7 @@ const AddRecord = (props) => {
                   Find or choose category
                 </option>
                 {categories.map((record) => {
-                  console.log(select);
+                  // console.log(select);
                   return (
                     <option value={record.categoryid}>
                       {record.categoryname}
@@ -185,7 +188,7 @@ const AddRecord = (props) => {
         <div className="flex flex-col gap-2 px-6 pb-6 pt-[18px] w-full ">
           <p className="text-[#1F2937]">Description</p>
           <textarea
-            onChange={handleAdd}
+            onChange={(e) => setValue(e.target.value)}
             placeholder="Write here"
             className="bg-[#F3F4F6] pt-4 pl-4 border border-[#D1D5DB] w-full h-full rounded-lg"
           />
