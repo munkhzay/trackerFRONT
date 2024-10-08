@@ -12,10 +12,9 @@ import FoodExpense from "../../public/icons/FoodExpenseIcon";
 
 // };
 
-const Recor = () => {
-  const [record, setRecord] = useState([]);
-  //   console.log(record);
-
+const Recor = (props) => {
+  const { myrecords, setMyrecords } = props;
+  console.log(myrecords);
   //   const { data, isLoading, error } = useSWR(
   //     fetcher,
   //     "http://localhost:8070/api/transaction"
@@ -25,32 +24,33 @@ const Recor = () => {
 
   //   console.log(data?.data);
 
-  useEffect(() => {
-    const getrecord = async () => {
-      const data = await axios.get("http://localhost:8070/api/transaction");
-      setRecord(data.data);
-    };
-    getrecord();
-  }, []);
+  // useEffect(() => {
+  //   const getrecord = async () => {
+  //     const data = await axios.get("http://localhost:8070/api/transaction");
+  //     setRecord(data.data);
+  //   };
+  //   getrecord();
+  // }, []);
   // const findIcon = records.filter((icon) => {
   //   if (icon.text === item.recordname)
   //     return <OneRecord iconColor={icon.color} />;
   // });
+  // const FindTransaction=()=>{
+  //   return <div>{re}</div>
+  // }
   return (
     <div>
-      {record.map((item) => {
-        console.log(item.transaction);
+      {myrecords?.map((item) => {
         return (
+          // <div key={item.userid}>
           <OneRecord
-            time={item.userid}
-            text={item.recordname}
-            // image={item.}
+            key={item.userid}
+            time={item.createdat}
+            text={item.categoryname}
             transaction_type={item.transaction}
-            // time={record.time}
-            color={""}
             money={item.amount}
-            iconColor={""}
           />
+          // </div>
         );
       })}
     </div>

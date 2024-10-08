@@ -3,18 +3,26 @@ import MyCategories from "./Category";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-const Profile = () => {
-  const [category, setCategory] = useState([]);
+const Profile = (props) => {
+  const { categories, setCategory } = props;
+  console.log(categories);
+
+  // const [category, setCategory] = useState([]);
+  // const Postcategory = () => {
+  //   setCategory(categories);
+  // };
+  // Postcategory();
+
   // const [cateid, setCateid] = useState("");
   // console.log(category);
+  // useEffect(() => {
+  //   const getCategories = async () => {
+  //     const { data } = await axios.get("http://localhost:8070/api/category");
+  //     setCategory(data);
+  //   };
 
-  useEffect(() => {
-    const getCategories = async () => {
-      const { data } = await axios.get("http://localhost:8070/api/category");
-      setCategory(data);
-    };
-    getCategories();
-  }, []);
+  //   getCategories();
+  // }, []);
   // const deleteCate = (e) => {
   //   setCateid(categoryid);
   // };
@@ -35,7 +43,7 @@ const Profile = () => {
 
   return (
     <div>
-      {category.map((item) => {
+      {categories?.map((item) => {
         // setCateid(item.categoryid);
         return (
           <MyCategories

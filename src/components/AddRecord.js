@@ -8,8 +8,9 @@ import RentIcon from "../../public/icons/RentIcon";
 import FoodExpense from "../../public/icons/FoodExpenseIcon";
 import axios from "axios";
 import { useRouter } from "next/router";
+import { toast } from "sonner";
 const AddRecord = (props) => {
-  const { onCloseModal } = props;
+  const { onCloseModal, refetchRecord } = props;
   const [incomeExpense, setIncomeExpense] = useState("Expense");
   const [value, setValue] = useState("");
   const [amount, setAmount] = useState();
@@ -17,9 +18,9 @@ const AddRecord = (props) => {
   const [categories, setCategories] = useState([]);
   const [name, setName] = useState("");
   const router = useRouter();
-  const handleIncomeOrExpense = (props) => {
-    const { name } = props;
-    setIncomeExpense(name);
+  const handleIncomeOrExpense = () => {
+    // const { name } = props;
+    // setIncomeExpense(name);
     if (incomeExpense === "Expense") {
       setIncomeExpense("Income");
     } else {
@@ -37,6 +38,7 @@ const AddRecord = (props) => {
   //   setName(e.target.value);
   // };
   const createCategory = async () => {
+    if (!amount || !value || !name) toast.error("something went wrong");
     await axios
       .post("http://localhost:8070/api/transaction", {
         userid: 51,
@@ -48,7 +50,8 @@ const AddRecord = (props) => {
       })
       .then(function (response) {
         console.log(response);
-        router.push("/");
+        onCloseModal();
+        refetchRecord();
       })
       .catch(function (error) {
         console.log(error);
@@ -61,7 +64,7 @@ const AddRecord = (props) => {
         .get("http://localhost:8070/api/category")
         .then(function (response) {
           // handle success
-
+          console.log(response);
           setCategories(response.data);
         })
         .catch(function (error) {
@@ -79,12 +82,12 @@ const AddRecord = (props) => {
   //   setSelect(e.target.value);
   // };
   // console.log(select);
-  const Expensebackground = incomeExpense === "Expense" ? "#0166FF" : "#F3F4F6";
-  const Incomebackground = incomeExpense === "Income" ? "#16A34A" : "#F3F4F6";
-  const buttonColor = incomeExpense === "Income" ? "#16A34A" : "#0166FF";
+  const Expensebackground = incomeExpense === "Expense" ? "#0166FF" : "#31a82f";
+  const Incomebackground = incomeExpense === "Income" ? "#16A34A" : "#31a82f";
+  const buttonColor = incomeExpense === "Income" ? "#31a82f" : "#0166FF";
   // console.log(buttonColor);
   const textColorIncome =
-    incomeExpense === "Income" ? "text-white" : "text-base";
+    incomeExpense === "Income" ? "text-black" : "text-base";
   const textColorExpense =
     incomeExpense === "Expense" ? "text-white" : "text-base";
   const today = new Date();
@@ -116,7 +119,7 @@ const AddRecord = (props) => {
             </div>
           </div>
           <div className="flex flex-col mb-3 gap-[22px]">
-            <div className="flex flex-col py-3 px-4 bg-[#F3F4F6] border border-[#D1D5DB] rounded-xl">
+            {/* <div className="flex flex-col py-3 px-4 bg-[#F3F4F6] border border-[#D1D5DB] rounded-xl">
               <p className="font-normal text-base"> Name </p>
               <input
                 onChange={(e) => setName(e.target.value)}
@@ -124,7 +127,7 @@ const AddRecord = (props) => {
                 placeholder="Name"
                 className="font-normal text-xl bg-[#F3F4F6]"
               />
-            </div>
+            </div> */}
             <div className="flex flex-col py-3 px-4 bg-[#F3F4F6] border border-[#D1D5DB] rounded-xl">
               <p className="font-normal text-base"> Amount </p>
               <input

@@ -1,11 +1,13 @@
 import axios from "axios";
 import daisyui from "daisyui";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
 import { IoClose } from "react-icons/io5";
 const NewCategories = (props) => {
-  const { onCloseModal } = props;
+  const { onCloseModal, refetchRecord } = props;
   const [categoryName, setCategoryName] = useState("");
+
   const handlecategories = async () => {
     await axios
       .post("http://localhost:8070/api/category", {
@@ -14,6 +16,8 @@ const NewCategories = (props) => {
       })
       .then(function (response) {
         console.log(response);
+        onCloseModal();
+        refetchRecord();
       })
       .catch(function (error) {
         console.log(error);

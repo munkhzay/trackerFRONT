@@ -1,5 +1,5 @@
 import Navbar from "../components/Navbar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MyCategories from "@/components/Category";
 import PlusSign from "../../public/icons/PlusSign";
 import OneRecord from "../components/OneRecord";
@@ -112,46 +112,77 @@ const Home = () => {
   const [showAdd, setShowAdd] = useState(false);
   const [showcategory, setShowcategory] = useState(false);
   const [selected, setSelected] = useState("All");
-  const [myRecords, setRecords] = useState(records);
-
+  const [myrecords, setMyrecords] = useState([]);
+  const [allRecords, setAllRecords] = useState([]);
+  const [category, setCategory] = useState();
+  const getCategories = async () => {
+    const { data } = await axios.get("http://localhost:8070/api/category");
+    setCategory(data);
+  };
+  useEffect(() => {
+    getCategories();
+  }, []);
   // const [selectedCategories, setSelectedCategories] = useState(categories);
   // const [selectedEyes, setSelectedEyes] = useState(checked);
 
   // const [checkedCategories, setCheckedCategories] = useState(categories);
   // console.log(selectedEyes);
   // console.log(checkedCategories);
-  const handleCategory = (input, index) => {
-    let myCategories = [...selectedEyes];
-    if (input == "true") {
-      myCategories[index] = "false";
-    } else {
-      myCategories[index] = "true";
-    }
-    setSelectedEyes(myCategories);
-    let filteredCategories = [];
-    for (let i = 0; i < categories.length; i++) {
-      if (selectedEyes[i] == "true") {
-        filteredCategories.push(selectedCategories[i]);
-      }
-    }
-    setCheckedCategories();
+  // const handleCategory = (input, index) => {
+  //   let myCategories = [...selectedEyes];
+  //   if (input == "true") {
+  //     myCategories[index] = "false";
+  //   } else {
+  //     myCategories[index] = "true";
+  //   }
+  //   setSelectedEyes(myCategories);
+  //   let filteredCategories = [];
+  //   for (let i = 0; i < categories.length; i++) {
+  //     if (selectedEyes[i] == "true") {
+  //       filteredCategories.push(selectedCategories[i]);
+  //     }
+  //   }
+  //   setCheckedCategories();
+  // };
+
+  const sortTransaction = async () => {
+    await axios
+      .get("http://localhost:8070/api/transaction/join")
+      .then(function (response) {
+        // handle success
+        console.log(response.data);
+        setMyrecords(response.data);
+        setAllRecords(response.data);
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      });
   };
-  const handleExpense = () => {
-    const filtered = records.map((day) =>
-      day.filter((oneRecord) => oneRecord.money.includes("-"))
-    );
-    setRecords(filtered);
-  };
-  const handleIncome = () => {
-    const filtered = records.map((day) =>
-      day.filter((oneRecord) => oneRecord.money.includes("+"))
-    );
-    // console.log(filtered);
-    setRecords(filtered);
-  };
+
+  useEffect(() => {
+    sortTransaction();
+  }, []);
+
   const handleAll = () => {
-    setRecords(records);
+    setMyrecords(allRecords);
   };
+
+  const handleExpense = () => {
+    const filter = allRecords.filter(
+      (onerecord) => onerecord.transaction === "Expense"
+    );
+    setMyrecords(filter);
+    console.log(filter);
+  };
+
+  const handleIncome = () => {
+    const filter = allRecords.filter(
+      (onerecord) => onerecord.transaction === "Income"
+    );
+    setMyrecords(filter);
+  };
+
   const handleChange = (option) => {
     setSelected(option);
   };
@@ -172,12 +203,15 @@ const Home = () => {
     <div>
       {showAdd && (
         <div className="z-30 fixed top-0 left-0 right-0 bottom-0 bg-gray-400 flex justify-center items-center">
-          <AddRecord onCloseModal={handleAdd} />
+          <AddRecord onCloseModal={handleAdd} refetchRecord={sortTransaction} />
         </div>
       )}
       {showcategory && (
         <div className="z-30 fixed top-0 left-0 right-0 bottom-0 bg-white flex justify-center items-center">
-          <NewCategories onCloseModal={handlecategory} />
+          <NewCategories
+            onCloseModal={handlecategory}
+            refetchRecord={getCategories}
+          />
         </div>
       )}
       <div className={`bg-[#F3F4F6] flex flex-col gap-8 items-center relative`}>
@@ -239,7 +273,7 @@ const Home = () => {
                 <p className="font-normal text-base opacity-20"> Clear </p>
               </div>
               <div className="flex flex-col gap-2">
-                <Profile />
+                <Profile categories={category} setCategory={setCategory} />
                 {/* {categories.map((category1, index) => {
                   return (
                     <div
@@ -278,7 +312,7 @@ const Home = () => {
             <div className="flex flex-col gap-3">
               <p className="font-semibold text-base"> Today </p>
               <div className="flex flex-col gap-3 mb-3">
-                <Recor />
+                <Recor myrecords={myrecords} />
                 {/* {myRecords[0].map((recordToday, index) => {
                   return 
                   // <OneRecord
@@ -295,7 +329,7 @@ const Home = () => {
               </div>
               <p className="font-semibold text-base"> Yesterday </p>
               <div className="flex flex-col gap-3">
-                <Recor />
+                <Recor myrecords={myrecords} />
                 {/* {myRecords[1].map((recordToday, index) => {
                   return (
                     <OneRecord
