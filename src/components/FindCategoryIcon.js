@@ -45,10 +45,8 @@ const records = [
   },
 ];
 const IconCategory = (props) => {
-  const { item } = props;
+  const { item, categoryname } = props;
   console.log(item);
-  const findIcon = records.filter((icon) => {
-    if (icon.text === item.categoryname) return findIcon;
-  });
+  const findIcon = records.find((icon) => icon.text === categoryname);
 };
 export default IconCategory;

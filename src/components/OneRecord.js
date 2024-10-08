@@ -1,5 +1,6 @@
 import FoodExpense from "../../public/icons/FoodExpenseIcon";
 import RentIcon from "../../public/icons/RentIcon";
+import IconCategory from "./FindCategoryIcon";
 
 const OneRecord = (props) => {
   const { text, image, time, color, money, transaction_type } = props;
@@ -7,6 +8,7 @@ const OneRecord = (props) => {
   const IconImg =
     transaction_type === "Expense" ? <FoodExpense /> : <RentIcon />;
   const IconMoney = transaction_type === "Expense" ? "#F54949" : "#23E01F";
+  IconCategory();
   return (
     <div className="w-full px-6 py-3 border bg-white border-[#E5E7EB] items-center justify-between flex rounded-xl">
       <div className="flex gap-4">
