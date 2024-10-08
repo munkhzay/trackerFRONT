@@ -45,7 +45,7 @@ const Recor = (props) => {
           // <div key={item.userid}>
           <OneRecord
             key={item.userid}
-            time={item.createdat}
+            // time={item.createdat}
             text={item.categoryname}
             transaction_type={item.transaction}
             money={item.amount}

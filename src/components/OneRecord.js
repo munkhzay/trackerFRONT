@@ -1,14 +1,20 @@
+import { format } from "date-fns";
 import FoodExpense from "../../public/icons/FoodExpenseIcon";
 import RentIcon from "../../public/icons/RentIcon";
-import IconCategory from "./FindCategoryIcon";
+import IconCategory from "../../util/FindCategoryIcon";
 
 const OneRecord = (props) => {
   const { text, image, time, color, money, transaction_type } = props;
+  const date = new Date(time);
+  const farmated = isNaN(date) ? "inValidtime" : format(date, "HH:mm");
   const iconcolor = transaction_type === "Expense" ? "#F54949" : "#23E01F";
+  const incomeorexp = transaction_type === "Expense" ? "-" : "+";
   const IconImg =
     transaction_type === "Expense" ? <FoodExpense /> : <RentIcon />;
   const IconMoney = transaction_type === "Expense" ? "#F54949" : "#23E01F";
-  IconCategory();
+  const foundIcon = IconCategory(props);
+
+  // const textcategory = <IconCategory text={text} />;
   return (
     <div className="w-full px-6 py-3 border bg-white border-[#E5E7EB] items-center justify-between flex rounded-xl">
       <div className="flex gap-4">
@@ -16,16 +22,16 @@ const OneRecord = (props) => {
           className={`flex justify-center items-center w-10 h-10 rounded-full`}
           style={{ backgroundColor: iconcolor }}
         >
-          {IconImg}
+          {foundIcon?.image}
         </div>
 
         <div className="flex flex-col">
           <p className="font-normal text-base">{text}</p>
-          <p className="font-normal text-xs text-[#6B7280]"> {time} </p>
+          <p className="font-normal text-xs text-[#6B7280]"> {farmated}</p>
         </div>
       </div>
       <p className={`font-semibold text-base ]`} style={{ color: iconcolor }}>
-        {" "}
+        {incomeorexp}
         {money}{" "}
       </p>
       {/* <svg

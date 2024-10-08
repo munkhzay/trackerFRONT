@@ -1,11 +1,12 @@
-import FoodExpense from "../../public/icons/FoodExpenseIcon";
-import RentIcon from "../../public/icons/RentIcon";
-import OneRecord from "./OneRecord";
+import FoodExpense from "../public/icons/FoodExpenseIcon";
+import RentIcon from "../public/icons/RentIcon";
+import OneRecord from "../src/components/OneRecord";
 import { FaCarAlt } from "react-icons/fa";
 import { FaHouseUser } from "react-icons/fa";
 import { FaCartShopping } from "react-icons/fa6";
 import { SiRemedyentertainment } from "react-icons/si";
 import { IoFastFoodSharp } from "react-icons/io5";
+import { icon } from "@fortawesome/fontawesome-svg-core";
 const records = [
   {
     color: "#23E01F",
@@ -45,8 +46,9 @@ const records = [
   },
 ];
 const IconCategory = (props) => {
-  const { item, categoryname } = props;
-  console.log(item);
-  const findIcon = records.find((icon) => icon.text === categoryname);
+  const { text } = props;
+  console.log(text);
+  const foundIcon = records.find((icon) => icon.text === text);
+  return foundIcon;
 };
 export default IconCategory;

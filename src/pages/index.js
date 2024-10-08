@@ -14,49 +14,10 @@ import Recor from "@/components/Records";
 import Link from "next/link";
 import newCategories from "@/components/newCategory";
 import NewCategories from "@/components/newCategory";
+import IconCategory from "../../util/FindCategoryIcon";
+import { useQueryState } from "next-usequerystate";
+
 const records = [
-  [
-    {
-      color: "#23E01F",
-      image: <RentIcon />,
-      time: "14:00",
-      text: "Lending & Renting",
-      money: "+ 1,000₮",
-      iconColor: "#0166FF",
-    },
-    {
-      color: "#F54949",
-      image: <FoodExpense />,
-      time: "14:00",
-      text: "Food & Drinks",
-      money: "- 1,000₮",
-      iconColor: "#FF4545",
-    },
-    {
-      color: "#F54949",
-      image: <FoodExpense />,
-      time: "14:00",
-      text: "Food & Drinks",
-      money: "- 1,000₮",
-      iconColor: "#FF4545",
-    },
-    {
-      color: "#23E01F",
-      image: <RentIcon />,
-      time: "14:00",
-      text: "Lending & Renting",
-      money: "+ 1,000₮",
-      iconColor: "#0166FF",
-    },
-    {
-      color: "#23E01F",
-      image: <RentIcon />,
-      time: "14:00",
-      text: "Lending & Renting",
-      money: "+ 1,000₮",
-      iconColor: "#0166FF",
-    },
-  ],
   [
     {
       color: "#23E01F",
@@ -115,6 +76,7 @@ const Home = () => {
   const [myrecords, setMyrecords] = useState([]);
   const [allRecords, setAllRecords] = useState([]);
   const [category, setCategory] = useState();
+  const [search, setSearch] = useQueryState("search");
   const getCategories = async () => {
     const { data } = await axios.get("http://localhost:8070/api/category");
     setCategory(data);
@@ -122,6 +84,7 @@ const Home = () => {
   useEffect(() => {
     getCategories();
   }, []);
+
   // const [selectedCategories, setSelectedCategories] = useState(categories);
   // const [selectedEyes, setSelectedEyes] = useState(checked);
 
@@ -229,6 +192,7 @@ const Home = () => {
               </button>
             </div>
             <input
+              onChange={(e) => setSearch(e.target.value)}
               placeholder="Search"
               className="border border-[#D1D5DB] rounded-lg px-4 py-1"
             />
