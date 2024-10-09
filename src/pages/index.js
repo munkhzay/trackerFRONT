@@ -77,50 +77,33 @@ const Home = () => {
   const [allRecords, setAllRecords] = useState([]);
   const [category, setCategory] = useState();
   const [search, setSearch] = useQueryState("search");
+
   const getCategories = async () => {
     const { data } = await axios.get("http://localhost:8070/api/category");
-    setCategory(data);
+
+    const formattedCategories = data.map((category) => {
+      return {
+        ...category,
+        selected: true,
+      };
+    });
+    setCategory(formattedCategories);
   };
+
   useEffect(() => {
     getCategories();
   }, []);
 
-  // const [selectedCategories, setSelectedCategories] = useState(categories);
-  // const [selectedEyes, setSelectedEyes] = useState(checked);
-
-  // const [checkedCategories, setCheckedCategories] = useState(categories);
-  // console.log(selectedEyes);
-  // console.log(checkedCategories);
-  // const handleCategory = (input, index) => {
-  //   let myCategories = [...selectedEyes];
-  //   if (input == "true") {
-  //     myCategories[index] = "false";
-  //   } else {
-  //     myCategories[index] = "true";
-  //   }
-  //   setSelectedEyes(myCategories);
-  //   let filteredCategories = [];
-  //   for (let i = 0; i < categories.length; i++) {
-  //     if (selectedEyes[i] == "true") {
-  //       filteredCategories.push(selectedCategories[i]);
-  //     }
-  //   }
-  //   setCheckedCategories();
-  // };
-
   const sortTransaction = async () => {
-    await axios
-      .get("http://localhost:8070/api/transaction/join")
-      .then(function (response) {
-        // handle success
-        console.log(response.data);
-        setMyrecords(response.data);
-        setAllRecords(response.data);
-      })
-      .catch(function (error) {
-        // handle error
-        console.log(error);
-      });
+    try {
+      const { data } = await axios.get(
+        "http://localhost:8070/api/transaction/join"
+      );
+      setMyrecords(data);
+      setAllRecords(data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
@@ -131,19 +114,14 @@ const Home = () => {
     setMyrecords(allRecords);
   };
 
-  const handleExpense = () => {
-    const filter = allRecords.filter(
-      (onerecord) => onerecord.transaction === "Expense"
-    );
-    setMyrecords(filter);
-    console.log(filter);
-  };
+  const handleChangeRecordsType = (type) => {
+    const filteredrecordsByType = allRecords.filter((onerecord) => {
+      if (type === "All") return true;
+      return onerecord.transaction === type;
+    });
 
-  const handleIncome = () => {
-    const filter = allRecords.filter(
-      (onerecord) => onerecord.transaction === "Income"
-    );
-    setMyrecords(filter);
+    setSelected(type);
+    setMyrecords(filteredrecordsByType);
   };
 
   const handleChange = (option) => {
@@ -156,13 +134,10 @@ const Home = () => {
   const handlecategory = () => {
     setShowcategory(!showcategory);
   };
-  // const createCategory = async () => {
-  //   const { data } = await axios.get("http://localhost:${port}/api/category");
-  //   console.log(data);
-  // };
-  // const opacity = showAdd === false ? "opacity-100" : "opacity-100";
+
+  console.log(allRecords);
+
   return (
-    // <div className="flex justify-center items-center flex-col">
     <div>
       {showAdd && (
         <div className="z-30 fixed top-0 left-0 right-0 bottom-0 bg-gray-400 flex justify-center items-center">
@@ -205,8 +180,7 @@ const Home = () => {
                   type="checkbox"
                   checked={"All" === selected}
                   className="checkbox"
-                  onChange={() => handleChange("All")}
-                  onClick={() => handleAll()}
+                  onClick={() => handleChangeRecordsType("All")}
                 />
                 All
               </div>
@@ -215,8 +189,7 @@ const Home = () => {
                   type="checkbox"
                   checked={"Income" === selected}
                   className="checkbox"
-                  onChange={() => handleChange("Income")}
-                  onClick={() => handleIncome()}
+                  onClick={() => handleChangeRecordsType("Income")}
                 />
                 Income
               </div>
@@ -225,8 +198,7 @@ const Home = () => {
                   type="checkbox"
                   checked={"Expense" === selected}
                   className="checkbox"
-                  onChange={() => handleChange("Expense")}
-                  onClick={() => handleExpense()}
+                  onClick={() => handleChangeRecordsType("Expense")}
                 />
                 Expense
               </div>
@@ -238,19 +210,9 @@ const Home = () => {
               </div>
               <div className="flex flex-col gap-2">
                 <Profile categories={category} setCategory={setCategory} />
-                {/* {categories.map((category1, index) => {
-                  return (
-                    <div
-                      onClick={() => handleCategory(selectedEyes[index], index)}
-                    >
-                      <MyCategories key={index} categoryName={category1} />
-                    </div>
-                  );
-                })} */}
-              </div>{" "}
+              </div>
               <button onClick={handlecategory}>
                 <div className="flex gap-2 py-1.5 pl-3 items-center">
-                  {" "}
                   <PlusSign color={"#0166FF"} />
                   Add category
                 </div>{" "}
@@ -276,37 +238,19 @@ const Home = () => {
             <div className="flex flex-col gap-3">
               <p className="font-semibold text-base"> Today </p>
               <div className="flex flex-col gap-3 mb-3">
-                <Recor myrecords={myrecords} />
-                {/* {myRecords[0].map((recordToday, index) => {
-                  return 
-                  // <OneRecord
-                  //   key={index}
-                  //   text={recordToday.text}
-                  //   image={recordToday.image}
-                  //   time={recordToday.time}
-                  //   color={recordToday.color}
-                  //   money={recordToday.money}
-                  //   iconColor={recordToday.iconColor}
-                  // />
-                  // );
-                })} */}
+                <Recor
+                  myrecords={myrecords}
+                  allRecords={allRecords}
+                  setAllRecords={setAllRecords}
+                />
               </div>
               <p className="font-semibold text-base"> Yesterday </p>
               <div className="flex flex-col gap-3">
-                <Recor myrecords={myrecords} />
-                {/* {myRecords[1].map((recordToday, index) => {
-                  return (
-                    <OneRecord
-                      key={index}
-                      text={recordToday.text}
-                      image={recordToday.image}
-                      time={recordToday.time}
-                      color={recordToday.color}
-                      money={recordToday.money}
-                      iconColor={recordToday.iconColor}
-                    />
-                  );
-                })} */}
+                <Recor
+                  myrecords={myrecords}
+                  allRecords={allRecords}
+                  setAllRecords={setAllRecords}
+                />
               </div>
             </div>
           </div>

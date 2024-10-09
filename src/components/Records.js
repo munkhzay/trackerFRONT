@@ -4,6 +4,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import RentIcon from "../../public/icons/RentIcon";
 import FoodExpense from "../../public/icons/FoodExpenseIcon";
+import { useQueryState } from "next-usequerystate";
+import MyCategories from "./Category";
 // const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 // export const IconCategory = (props) => {
@@ -13,47 +15,56 @@ import FoodExpense from "../../public/icons/FoodExpenseIcon";
 // };
 
 const Recor = (props) => {
-  const { myrecords, setMyrecords } = props;
-  console.log(myrecords);
-  //   const { data, isLoading, error } = useSWR(
-  //     fetcher,
-  //     "http://localhost:8070/api/transaction"
-  //   );
-  //   if (isLoading) return <div>isLoading</div>;
-  //   if (error) return <div>oh sorry error</div>;
+  const { myrecords, setMyrecords, allRecords, setAllRecords, categoryname } =
+    props;
+  console.log(categoryname);
+  // const [alldata, setAlldata] = useState([]);
 
-  //   console.log(data?.data);
-
-  // useEffect(() => {
-  //   const getrecord = async () => {
-  //     const data = await axios.get("http://localhost:8070/api/transaction");
-  //     setRecord(data.data);
-  //   };
-  //   getrecord();
-  // }, []);
-  // const findIcon = records.filter((icon) => {
-  //   if (icon.text === item.recordname)
-  //     return <OneRecord iconColor={icon.color} />;
+  const [search] = useQueryState("search");
+  // const filterDta = () => {
+  const filteredproducts = myrecords.filter((item) => {
+    if (!search) return true;
+    return item.categoryname.toLowerCase().includes(search?.toLowerCase());
+  });
+  // const selectEyes = filteredproducts.filter((item) => {
+  //   item.categoryname === categoryname;
   // });
-  // const FindTransaction=()=>{
-  //   return <div>{re}</div>
-  // }
+
+  // const filteredrecordsByCategories = filteredproducts.filter((record) => {
+  //   console.log("record: ", record);
+
+  //   // const foundedCategory = category.find((category) => {
+  //   //   return record.categorid === category.categorid;
+  //   // });
+
+  //   return foundedCategory.selected;
+  // });
+
   return (
     <div>
-      {myrecords?.map((item) => {
+      {filteredproducts?.map((item) => {
         return (
-          // <div key={item.userid}>
           <OneRecord
             key={item.userid}
-            // time={item.createdat}
             text={item.categoryname}
             transaction_type={item.transaction}
             money={item.amount}
           />
-          // </div>
         );
       })}
     </div>
   );
 };
 export default Recor;
+
+const numbers = [1, 2, 3];
+
+const selectedNumbers = [1];
+
+const filterddNUmbers = numbers.filter((number) => {
+  if (selectedNumbers.includes(number)) {
+    return true;
+  } else {
+    return false;
+  }
+});

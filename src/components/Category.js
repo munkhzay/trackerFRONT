@@ -2,31 +2,21 @@ import EyeIcon from "../../public/icons/EyeIcon";
 import ClosedEyeIcon from "../../public/icons/ClosedEyeIcon";
 import { useState } from "react";
 import axios from "axios";
+import Recor from "./Records";
 
-const MyCategories = (props) => {
-  const { categoryName, ischecked, categoryid, handleDelete } = props;
-  const [checked, setChecked] = useState("true");
-  const [cateid, setCateid] = useState("");
+const Category = (props) => {
+  const { categoryName, selected, handleDelete, onSelect } = props;
 
-  const handleClick = () => {
-    if (checked === "true") {
-      setChecked("false");
-    } else {
-      setChecked("true");
-    }
-  };
-  const deleteCate = (e) => {
-    setCateid(e.target.values);
-  };
-  const icon = checked === "true" ? <EyeIcon /> : <ClosedEyeIcon />;
+  const icon = selected ? <EyeIcon /> : <ClosedEyeIcon />;
+
   return (
     <div className="flex">
       <div
-        onClick={() => handleClick()}
+        onClick={onSelect}
         className="w-full pl-3 py-1.5 flex gap-5 items-center"
       >
         {icon}
-        <p className="font-normal w-24  text-base text-[#1F2937]">
+        <p onChange={""} className="font-normal w-24  text-base text-[#1F2937]">
           {categoryName}
         </p>
       </div>
@@ -47,4 +37,4 @@ const MyCategories = (props) => {
   );
 };
 
-export default MyCategories;
+export default Category;

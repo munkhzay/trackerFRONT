@@ -24,7 +24,6 @@ const OneRecord = (props) => {
         >
           {foundIcon?.image}
         </div>
-
         <div className="flex flex-col">
           <p className="font-normal text-base">{text}</p>
           <p className="font-normal text-xs text-[#6B7280]"> {farmated}</p>

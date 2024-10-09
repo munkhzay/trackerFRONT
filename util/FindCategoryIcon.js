@@ -6,7 +6,8 @@ import { FaHouseUser } from "react-icons/fa";
 import { FaCartShopping } from "react-icons/fa6";
 import { SiRemedyentertainment } from "react-icons/si";
 import { IoFastFoodSharp } from "react-icons/io5";
-import { icon } from "@fortawesome/fontawesome-svg-core";
+import { FaHouse } from "react-icons/fa6";
+// import { icon } from "@fortawesome/fontawesome-svg-core";
 const records = [
   {
     color: "#23E01F",
@@ -16,7 +17,7 @@ const records = [
   },
   {
     color: "#F54949",
-    image: <FaHouseUser />,
+    image: <FaHouse />,
     text: "Housing",
     iconColor: "#FF4545",
   },
@@ -47,7 +48,7 @@ const records = [
 ];
 const IconCategory = (props) => {
   const { text } = props;
-  console.log(text);
+
   const foundIcon = records.find((icon) => icon.text === text);
   return foundIcon;
 };

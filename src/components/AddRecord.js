@@ -57,7 +57,7 @@ const AddRecord = (props) => {
         console.log(error);
       });
   };
-  console.log(select);
+
   useEffect(() => {
     const getcategory = async () => {
       await axios
