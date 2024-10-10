@@ -1,22 +1,22 @@
 import Category from "./Category";
 import axios from "axios";
 
-const Profile = (props) => {
-  const { categories, setCategory } = props;
+const Categories = (props) => {
+  const { categories, setCategory, onSelectCategory } = props;
 
-  const onSelectCategory = (selectedCategory) => {
-    const updatedCategory = categories.map((category) => {
-      if (category.categoryid === selectedCategory.categoryid) {
-        return {
-          ...category,
-          selected: false,
-        };
-      }
-      return category;
-    });
-
-    setCategory(updatedCategory);
-  };
+  // const onSelectCategory = (onecategory) => {
+  //   console.log(onecategory.categoryid);
+  //   const updatedCategory = categories.map((category) => {
+  //     if (category.categoryid === onecategory.categoryid) {
+  //       return {
+  //         ...category,
+  //         selected: !category.selected,
+  //       };
+  //     }
+  //     return category;
+  //   });
+  //   setCategory(updatedCategory);
+  // };
 
   const deleteCategory = async (categoryid) => {
     await axios
@@ -47,4 +47,4 @@ const Profile = (props) => {
     </div>
   );
 };
-export default Profile;
+export default Categories;

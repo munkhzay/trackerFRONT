@@ -9,66 +9,15 @@ import RentIcon from "../../public/icons/RentIcon";
 import FoodExpense from "../../public/icons/FoodExpenseIcon";
 import axios from "axios";
 import AddRecord from "@/components/AddRecord";
-import Profile from "@/components/Categories";
 import Recor from "@/components/Records";
 import Link from "next/link";
 import newCategories from "@/components/newCategory";
 import NewCategories from "@/components/newCategory";
 import IconCategory from "../../util/FindCategoryIcon";
 import { useQueryState } from "next-usequerystate";
+import Categories from "@/components/Categories";
+import Transaction from "@/components/Records";
 
-const records = [
-  [
-    {
-      color: "#23E01F",
-      image: <RentIcon />,
-      time: "14:00",
-      text: "Lending & Renting",
-      money: "+ 1,000₮",
-      iconColor: "#0166FF",
-    },
-    {
-      color: "#F54949",
-      image: <FoodExpense />,
-      time: "14:00",
-      text: "Food & Drinks",
-      money: "- 1,000₮",
-      iconColor: "#FF4545",
-    },
-    {
-      color: "#F54949",
-      image: <FoodExpense />,
-      time: "14:00",
-      text: "Food & Drinks",
-      money: "- 1,000₮",
-      iconColor: "#FF4545",
-    },
-    {
-      color: "#23E01F",
-      image: <RentIcon />,
-      time: "14:00",
-      text: "Lending & Renting",
-      money: "+ 1,000₮",
-      iconColor: "#0166FF",
-    },
-    {
-      color: "#F54949",
-      image: <FoodExpense />,
-      time: "14:00",
-      text: "Food & Drinks",
-      money: "- 1,000₮",
-      iconColor: "#FF4545",
-    },
-    {
-      color: "#F54949",
-      image: <FoodExpense />,
-      time: "14:00",
-      text: "Food & Drinks",
-      money: "- 1,000₮",
-      iconColor: "#FF4545",
-    },
-  ],
-];
 const Home = () => {
   const [showAdd, setShowAdd] = useState(false);
   const [showcategory, setShowcategory] = useState(false);
@@ -77,10 +26,10 @@ const Home = () => {
   const [allRecords, setAllRecords] = useState([]);
   const [category, setCategory] = useState();
   const [search, setSearch] = useQueryState("search");
+  const [selectedcategory, setSelectedCategory] = useState([]);
 
   const getCategories = async () => {
     const { data } = await axios.get("http://localhost:8070/api/category");
-
     const formattedCategories = data.map((category) => {
       return {
         ...category,
@@ -89,7 +38,6 @@ const Home = () => {
     });
     setCategory(formattedCategories);
   };
-
   useEffect(() => {
     getCategories();
   }, []);
@@ -105,25 +53,37 @@ const Home = () => {
       console.log(error);
     }
   };
-
   useEffect(() => {
     sortTransaction();
   }, []);
-
-  const handleAll = () => {
-    setMyrecords(allRecords);
-  };
 
   const handleChangeRecordsType = (type) => {
     const filteredrecordsByType = allRecords.filter((onerecord) => {
       if (type === "All") return true;
       return onerecord.transaction === type;
     });
-
     setSelected(type);
     setMyrecords(filteredrecordsByType);
   };
 
+  const onSelectCategory = (onecategory) => {
+    setSelectedCategory(onecategory);
+    const updatedCategory = category.map((category) => {
+      if (category.categoryid === onecategory.categoryid) {
+        return {
+          ...category,
+          selected: !category.selected,
+        };
+      }
+      return category;
+    });
+    setCategory(updatedCategory);
+  };
+  console.log(selectedcategory);
+
+  const handleAll = () => {
+    setMyrecords(allRecords);
+  };
   const handleChange = (option) => {
     setSelected(option);
   };
@@ -134,8 +94,6 @@ const Home = () => {
   const handlecategory = () => {
     setShowcategory(!showcategory);
   };
-
-  console.log(allRecords);
 
   return (
     <div>
@@ -154,7 +112,6 @@ const Home = () => {
       )}
       <div className={`bg-[#F3F4F6] flex flex-col gap-8 items-center relative`}>
         <Navbar />
-
         <div className="flex gap-6">
           <div className="bg-white flex flex-col px-6 py-4 w-[282px] gap-6 rounded-xl h-fit border border-[#E5E7EB]">
             <div className="flex flex-col gap-6">
@@ -209,7 +166,11 @@ const Home = () => {
                 <p className="font-normal text-base opacity-20"> Clear </p>
               </div>
               <div className="flex flex-col gap-2">
-                <Profile categories={category} setCategory={setCategory} />
+                <Categories
+                  categories={category}
+                  setCategory={setCategory}
+                  onSelectCategory={onSelectCategory}
+                />
               </div>
               <button onClick={handlecategory}>
                 <div className="flex gap-2 py-1.5 pl-3 items-center">
@@ -238,19 +199,23 @@ const Home = () => {
             <div className="flex flex-col gap-3">
               <p className="font-semibold text-base"> Today </p>
               <div className="flex flex-col gap-3 mb-3">
-                <Recor
+                <Transaction
+                  onSelectCategory={onSelectCategory}
+                  categories={category}
                   myrecords={myrecords}
                   allRecords={allRecords}
                   setAllRecords={setAllRecords}
+                  onecategory={selectedcategory}
                 />
               </div>
               <p className="font-semibold text-base"> Yesterday </p>
               <div className="flex flex-col gap-3">
-                <Recor
+                {/* <Recor
                   myrecords={myrecords}
                   allRecords={allRecords}
                   setAllRecords={setAllRecords}
-                />
+                  categories={category}
+                /> */}
               </div>
             </div>
           </div>

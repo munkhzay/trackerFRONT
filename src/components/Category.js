@@ -6,8 +6,8 @@ import Recor from "./Records";
 
 const Category = (props) => {
   const { categoryName, selected, handleDelete, onSelect } = props;
-
-  const icon = selected ? <EyeIcon /> : <ClosedEyeIcon />;
+  console.log(selected);
+  const icon = selected === true ? <ClosedEyeIcon /> : <EyeIcon />;
 
   return (
     <div className="flex">

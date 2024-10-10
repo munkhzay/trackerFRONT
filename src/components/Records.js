@@ -6,43 +6,42 @@ import RentIcon from "../../public/icons/RentIcon";
 import FoodExpense from "../../public/icons/FoodExpenseIcon";
 import { useQueryState } from "next-usequerystate";
 import MyCategories from "./Category";
-// const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
-// export const IconCategory = (props) => {
-//   const { item } = props;
-//   console.log(item);
-
-// };
-
-const Recor = (props) => {
-  const { myrecords, setMyrecords, allRecords, setAllRecords, categoryname } =
-    props;
-  console.log(categoryname);
-  // const [alldata, setAlldata] = useState([]);
-
+const Transaction = (props) => {
+  const {
+    myrecords,
+    onecategory,
+    setMyrecords,
+    allRecords,
+    setAllRecords,
+    categoryname,
+    categories,
+  } = props;
+  const [allselectedrecords, setAllselectedrecords] = useState([]);
   const [search] = useQueryState("search");
-  // const filterDta = () => {
   const filteredproducts = myrecords.filter((item) => {
     if (!search) return true;
     return item.categoryname.toLowerCase().includes(search?.toLowerCase());
   });
-  // const selectEyes = filteredproducts.filter((item) => {
-  //   item.categoryname === categoryname;
-  // });
+
+  const filteredrecordsByCategories = filteredproducts.filter((record) => {
+    if (onecategory.selected === true)
+      return record.categoryid === onecategory.categoryid;
+    if (onecategory.selected === false) return;
+  });
+  console.log(filteredrecordsByCategories);
 
   // const filteredrecordsByCategories = filteredproducts.filter((record) => {
-  //   console.log("record: ", record);
-
-  //   // const foundedCategory = category.find((category) => {
-  //   //   return record.categorid === category.categorid;
-  //   // });
-
-  //   return foundedCategory.selected;
+  //   const selectCategory = record.find(
+  //     (categoryid) => categoryid === onecategory.categorid
+  //   );
+  //   console.log(selectCategory);
+  //   return selectCategory;
   // });
-
+  // console.log(filteredrecordsByCategories);
   return (
     <div>
-      {filteredproducts?.map((item) => {
+      {filteredrecordsByCategories?.map((item) => {
         return (
           <OneRecord
             key={item.userid}
@@ -55,7 +54,7 @@ const Recor = (props) => {
     </div>
   );
 };
-export default Recor;
+export default Transaction;
 
 const numbers = [1, 2, 3];
 
