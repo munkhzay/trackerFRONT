@@ -19,7 +19,7 @@ const SignIn = () => {
       .then(function (response) {
         console.log(response);
         if (response.data.length === 1) return router.push("/");
-        else return toast("unsuccesful");
+        else return toast("unsuccessful");
       })
       .catch(function (error) {
         console.log(error);

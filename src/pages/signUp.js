@@ -25,26 +25,36 @@ const SignUp = () => {
     setRePassword(event.target.value);
   };
 
-  const createUser = async () => {
-    await axios.post("http://localhost:8070/api/signup", {
-      email: email,
-      username: name,
-      userpassword: password,
-      avatar_img: rePassword,
-    })
-      .then(function (response) {
-        console.log(response);   
-        localStorage.setItem("userid", response.data[0].userid)
-        if (password != rePassword) return toast("password error");
-        if (password.length <= 7) return toast("password urt baga bainaa");
-        else return router.push("/signIn");
-      
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  };
+  // const createUser = async () => {
+  //   await axios
+  //     .post("http://localhost:8070/api/signup", {
+  //       email: email,
+  //       username: name,
+  //       userpassword: password,
+  //       avatar_img: rePassword,
+  //     })
+  //     .then(function (response) {
+  //       console.log(response);
+  //       localStorage.setItem("userid", response.data[0].userid);
+  //       if (password != rePassword) return toast("password error");
+  //       if (password.length <= 7) return toast("password urt baga bainaa");
+  //       else return router.push("/signIn");
+  //     })
+  //     .catch(function (error) {
+  //       console.log(error);
+  //     });
+  // };
 
+  const createUser = async() => {
+    try {
+      const response= await axios.post('http://localhost:8070/api/signup',{
+        email:'',
+        username:''
+      })}
+      catch (error){console.log(error)}
+    }
+    
+  };
   return (
     <div className="flex w-screen h-screen">
       <div className="w-3/5 bg-[#FFFFFF] flex  justify-center items-center">
@@ -90,6 +100,7 @@ const SignUp = () => {
             />
             <Toaster />
             <button
+              // disabled={}
               onClick={createUser}
               className="bg-[#0166FF] justify-center font-normal text-xl flex items-center text-white text-center py-2.5 w-full rounded-3xl"
             >

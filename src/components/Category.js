@@ -6,7 +6,7 @@ import Recor from "./Records";
 
 const Category = (props) => {
   const { categoryName, selected, handleDelete, onSelect } = props;
-  console.log(selected);
+  // console.log(selected);
   const icon = selected === true ? <ClosedEyeIcon /> : <EyeIcon />;
 
   return (

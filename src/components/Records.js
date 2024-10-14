@@ -17,19 +17,20 @@ const Transaction = (props) => {
     categoryname,
     categories,
   } = props;
-  const [allselectedrecords, setAllselectedrecords] = useState([]);
+
+  const [allselectedcategory, setAllselectedcategory] = useState([]);
   const [search] = useQueryState("search");
   const filteredproducts = myrecords.filter((item) => {
     if (!search) return true;
     return item.categoryname.toLowerCase().includes(search?.toLowerCase());
   });
 
-  const filteredrecordsByCategories = filteredproducts.filter((record) => {
-    if (onecategory.selected === true)
-      return record.categoryid === onecategory.categoryid;
-    if (onecategory.selected === false) return;
-  });
-  console.log(filteredrecordsByCategories);
+  // const allSelectedRecords = selectedcategory.map((product) => {
+  //   const filteredrecordsByCategories = filteredproducts.filter((record) => record.categoryid === product.categoryid);
+  // });
+
+  // console.log(allselectedrecords);
+  // console.log(filteredrecordsByCategories);
 
   // const filteredrecordsByCategories = filteredproducts.filter((record) => {
   //   const selectCategory = record.find(
@@ -41,7 +42,7 @@ const Transaction = (props) => {
   // console.log(filteredrecordsByCategories);
   return (
     <div>
-      {filteredrecordsByCategories?.map((item) => {
+      {/* {filteredrecordsByCategories?.map((item) => {
         return (
           <OneRecord
             key={item.userid}
@@ -50,7 +51,7 @@ const Transaction = (props) => {
             money={item.amount}
           />
         );
-      })}
+      })} */}
     </div>
   );
 };
