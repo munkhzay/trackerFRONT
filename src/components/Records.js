@@ -17,7 +17,7 @@ const Transaction = (props) => {
     categoryname,
     categories,
   } = props;
-
+  // console.log(selectedcategory);
   const [allselectedcategory, setAllselectedcategory] = useState([]);
   const [search] = useQueryState("");
   const filteredproducts = myrecords.filter((item) => {
@@ -52,6 +52,7 @@ const Transaction = (props) => {
   //   const filteredrecordsByCategories = filteredproducts.filter(
   //     (record) => record.categoryid === product.categoryid
   //   );
+
   //   return filteredrecordsByCategories;
   // });
   return (
