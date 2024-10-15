@@ -26,8 +26,9 @@ const Home = () => {
   const [allRecords, setAllRecords] = useState([]);
   const [category, setCategory] = useState();
   const [search, setSearch] = useQueryState("search");
-  const [selectedcategory, setSelectedCategory] = useState([]);
-
+  const [selectedCategory, setSelectedCategory] = useState([]);
+  const [selectedCategoryEyes, setSelectedCategoryEyes] = useState([]);
+  const [toggle, setToggle] = useState(true);
   const getCategories = async () => {
     const { data } = await axios.get("http://localhost:8070/api/category");
     const formattedCategories = data.map((category) => {
@@ -67,7 +68,8 @@ const Home = () => {
   };
 
   const onSelectCategory = (onecategory) => {
-    setSelectedCategory(onecategory);
+    //   setSelectedCategory([onecategory, ...selectedCategory]);
+    //   console.log(selectedCategory);
     const updatedCategory = category.map((category) => {
       if (category.categoryid === onecategory.categoryid) {
         return {
@@ -79,7 +81,6 @@ const Home = () => {
     });
     setCategory(updatedCategory);
   };
-  console.log(selectedcategory);
 
   const handleAll = () => {
     setMyrecords(allRecords);
@@ -97,6 +98,7 @@ const Home = () => {
 
   return (
     <div>
+      {/* <input type="checkbox" className="toggle" defaultChecked /> */}
       {showAdd && (
         <div className="z-30 fixed top-0 left-0 right-0 bottom-0 bg-gray-400 flex justify-center items-center">
           <AddRecord onCloseModal={handleAdd} refetchRecord={sortTransaction} />
@@ -205,7 +207,7 @@ const Home = () => {
                   myrecords={myrecords}
                   allRecords={allRecords}
                   setAllRecords={setAllRecords}
-                  onecategory={selectedcategory}
+                  selectedcategory={selectedCategory}
                 />
               </div>
               <p className="font-semibold text-base"> Yesterday </p>

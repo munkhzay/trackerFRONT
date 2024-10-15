@@ -10,14 +10,14 @@ import MyCategories from "./Category";
 const Transaction = (props) => {
   const {
     myrecords,
-    onecategory,
+    selectedcategory,
     setMyrecords,
     allRecords,
     setAllRecords,
     categoryname,
     categories,
   } = props;
-
+  // console.log(selectedcategory);
   const [allselectedcategory, setAllselectedcategory] = useState([]);
   const [search] = useQueryState("search");
   const filteredproducts = myrecords.filter((item) => {
@@ -26,23 +26,21 @@ const Transaction = (props) => {
   });
 
   // const allSelectedRecords = selectedcategory.map((product) => {
-  //   const filteredrecordsByCategories = filteredproducts.filter((record) => record.categoryid === product.categoryid);
-  // });
-
-  // console.log(allselectedrecords);
-  // console.log(filteredrecordsByCategories);
-
-  // const filteredrecordsByCategories = filteredproducts.filter((record) => {
-  //   const selectCategory = record.find(
-  //     (categoryid) => categoryid === onecategory.categorid
+  //   const filteredrecordsByCategories = filteredproducts.filter(
+  //     (record) => record.categoryid === product.categoryid
   //   );
-  //   console.log(selectCategory);
-  //   return selectCategory;
+
+  //   return filteredrecordsByCategories;
   // });
+  // console.log(allSelectedRecords);
+
   // console.log(filteredrecordsByCategories);
+  const filteredrecordsByCategories = filteredproducts.filter((records) => {
+    console.log(records);
+  });
   return (
     <div>
-      {/* {filteredrecordsByCategories?.map((item) => {
+      {filteredproducts?.map((item) => {
         return (
           <OneRecord
             key={item.userid}
@@ -51,7 +49,7 @@ const Transaction = (props) => {
             money={item.amount}
           />
         );
-      })} */}
+      })}
     </div>
   );
 };

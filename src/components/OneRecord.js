@@ -1,3 +1,4 @@
+// import { format } from "date-fns";
 import { format } from "date-fns";
 import FoodExpense from "../../public/icons/FoodExpenseIcon";
 import RentIcon from "../../public/icons/RentIcon";
@@ -5,8 +6,8 @@ import IconCategory from "../../util/FindCategoryIcon";
 
 const OneRecord = (props) => {
   const { text, image, time, color, money, transaction_type } = props;
-  const date = new Date(time);
-  const farmated = isNaN(date) ? "inValidtime" : format(date, "HH:mm");
+  // const date = new Date(time);
+  // const farmated = isNaN(date) ? "inValidtime" : format(date, "HH:mm");
   const iconcolor = transaction_type === "Expense" ? "#F54949" : "#23E01F";
   const incomeorexp = transaction_type === "Expense" ? "-" : "+";
   const IconImg =
@@ -26,7 +27,10 @@ const OneRecord = (props) => {
         </div>
         <div className="flex flex-col">
           <p className="font-normal text-base">{text}</p>
-          <p className="font-normal text-xs text-[#6B7280]"> {farmated}</p>
+          <p className="font-normal text-xs text-[#6B7280]">
+            {" "}
+            {format(Date(time), "MMM:dd HH:mm")}
+          </p>
         </div>
       </div>
       <p className={`font-semibold text-base ]`} style={{ color: iconcolor }}>
