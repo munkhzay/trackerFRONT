@@ -10,7 +10,7 @@ import MyCategories from "./Category";
 const Transaction = (props) => {
   const {
     myrecords,
-    onecategory,
+    selectedcategory,
     setMyrecords,
     allRecords,
     setAllRecords,
@@ -19,39 +19,55 @@ const Transaction = (props) => {
   } = props;
 
   const [allselectedcategory, setAllselectedcategory] = useState([]);
-  const [search] = useQueryState("search");
+  const [search] = useQueryState("");
   const filteredproducts = myrecords.filter((item) => {
     if (!search) return true;
     return item.categoryname.toLowerCase().includes(search?.toLowerCase());
   });
+  const datas = categories.filter((category) => category.selected === false);
+  console.log(datas);
+  const selectedeyesRecords = datas.map((category) => {
+    const recordsEye = filteredproducts.filter(
+      (record) => record.categoryid === category.categoryid
+    );
+    console.log(recordsEye);
+    return recordsEye;
+  });
+  console.log(selectedeyesRecords);
 
+  // const selectedEyesCategory = filteredproducts.filter((onerecord) => {
+  //   if (
+  //     onerecord.categoryid === selectedcategory.categoryid &&
+  //     selectedcategory.selected === true
+  //   )
+  //     return onerecord;
+  //   if (onerecord.categoryid !== selectedcategory.categoryid) return;
+  // });
+  // const data = () => {
+  //   setAllselectedcategory(selectedEyesCategory);
+  // };
+
+  // console.log(allselectedcategory);
   // const allSelectedRecords = selectedcategory.map((product) => {
-  //   const filteredrecordsByCategories = filteredproducts.filter((record) => record.categoryid === product.categoryid);
-  // });
-
-  // console.log(allselectedrecords);
-  // console.log(filteredrecordsByCategories);
-
-  // const filteredrecordsByCategories = filteredproducts.filter((record) => {
-  //   const selectCategory = record.find(
-  //     (categoryid) => categoryid === onecategory.categorid
+  //   const filteredrecordsByCategories = filteredproducts.filter(
+  //     (record) => record.categoryid === product.categoryid
   //   );
-  //   console.log(selectCategory);
-  //   return selectCategory;
+  //   return filteredrecordsByCategories;
   // });
-  // console.log(filteredrecordsByCategories);
   return (
     <div>
-      {/* {filteredrecordsByCategories?.map((item) => {
-        return (
-          <OneRecord
-            key={item.userid}
-            text={item.categoryname}
-            transaction_type={item.transaction}
-            money={item.amount}
-          />
-        );
-      })} */}
+      {selectedeyesRecords?.map((onerecord, index) => (
+        <div key={index}>
+          {onerecord.map((record) => (
+            <OneRecord
+              key={record.userid}
+              text={record.categoryname}
+              transaction_type={record.transaction}
+              money={record.amount}
+            />
+          ))}
+        </div>
+      ))}
     </div>
   );
 };

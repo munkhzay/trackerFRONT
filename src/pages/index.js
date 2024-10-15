@@ -68,6 +68,13 @@ const Home = () => {
 
   const onSelectCategory = (onecategory) => {
     setSelectedCategory(onecategory);
+    // const eyesClosed = () => {
+    //   if (onecategory.selected === false) return;
+    //   setSelectedCategory([...selectedcategory, onecategory]);
+    //   if (onecategory.selected === true) return;
+    //   setSelectedCategory("");
+    // };
+    // eyesClosed();
     const updatedCategory = category.map((category) => {
       if (category.categoryid === onecategory.categoryid) {
         return {
@@ -78,8 +85,10 @@ const Home = () => {
       return category;
     });
     setCategory(updatedCategory);
+
+    console.log(category);
   };
-  console.log(selectedcategory);
+  // console.log(selectedcategory);
 
   const handleAll = () => {
     setMyrecords(allRecords);
@@ -205,7 +214,7 @@ const Home = () => {
                   myrecords={myrecords}
                   allRecords={allRecords}
                   setAllRecords={setAllRecords}
-                  onecategory={selectedcategory}
+                  selectedcategory={selectedcategory}
                 />
               </div>
               <p className="font-semibold text-base"> Yesterday </p>
