@@ -150,11 +150,9 @@ const AddRecord = (props) => {
                 {categories.map((record, index) => {
                   // console.log(select);
                   return (
-                    <div key={index}>
-                      <option value={record.categoryid}>
-                        {record.categoryname}
-                      </option>
-                    </div>
+                    <option key={index} value={record.categoryid}>
+                      {record.categoryname}
+                    </option>
                   );
                 })}
                 {/* <option value="Food" className="px-[18px] py-2 flex gap-3">

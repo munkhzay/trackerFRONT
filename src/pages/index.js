@@ -27,6 +27,11 @@ const Home = () => {
   const [category, setCategory] = useState();
   const [search, setSearch] = useQueryState("search");
   const [selectedcategory, setSelectedCategory] = useState([]);
+  const [isChecked, setIsChecked] = useState(false);
+
+  const handleCheckboxChange = (e) => {
+    setIsChecked(e.target.checked);
+  };
 
   const getCategories = async () => {
     const { data } = await axios.get(
@@ -70,13 +75,6 @@ const Home = () => {
 
   const onSelectCategory = (onecategory) => {
     setSelectedCategory(onecategory);
-    // const eyesClosed = () => {
-    //   if (onecategory.selected === false) return;
-    //   setSelectedCategory([...selectedcategory, onecategory]);
-    //   if (onecategory.selected === true) return;
-    //   setSelectedCategory("");
-    // };
-    // eyesClosed();
     const updatedCategory = category.map((category) => {
       if (category.categoryid === onecategory.categoryid) {
         return {
@@ -87,11 +85,9 @@ const Home = () => {
       return category;
     });
     setCategory(updatedCategory);
-
-    console.log(category);
   };
-  // console.log(selectedcategory);
 
+  console.log(category);
   const handleAll = () => {
     setMyrecords(allRecords);
   };
@@ -104,6 +100,14 @@ const Home = () => {
   };
   const handlecategory = () => {
     setShowcategory(!showcategory);
+  };
+
+  console.log(category);
+  const handleClear = () => {
+    console.log("hhh");
+    category.map((onecategory) => {
+      return onecategory.selected === true;
+    });
   };
 
   return (
@@ -145,6 +149,7 @@ const Home = () => {
               </p>
               <div className="flex items-center gap-2 px-3 py-1.5">
                 <input
+                  onChange={handleCheckboxChange}
                   type="checkbox"
                   checked={"All" === selected}
                   className="checkbox"
@@ -154,6 +159,7 @@ const Home = () => {
               </div>
               <div className="flex items-center gap-2 px-3 py-1.5">
                 <input
+                  onChange={handleCheckboxChange}
                   type="checkbox"
                   checked={"Income" === selected}
                   className="checkbox"
@@ -163,6 +169,7 @@ const Home = () => {
               </div>
               <div className="flex items-center gap-2 px-3 py-1.5">
                 <input
+                  onChange={handleCheckboxChange}
                   type="checkbox"
                   checked={"Expense" === selected}
                   className="checkbox"
@@ -174,13 +181,20 @@ const Home = () => {
             <div className="flex flex-col gap-4">
               <div className="flex justify-between">
                 <p className="font-semibold text-base">Category</p>
-                <p className="font-normal text-base opacity-20"> Clear </p>
+                <div
+                  className="font-normal text-base opacity-20"
+                  onClick={handleClear}
+                >
+                  {" "}
+                  Clear{" "}
+                </div>
               </div>
               <div className="flex flex-col gap-2">
                 <Categories
                   categories={category}
                   setCategory={setCategory}
                   onSelectCategory={onSelectCategory}
+                  refetchRecord={getCategories}
                 />
               </div>
               <button onClick={handlecategory}>
@@ -217,6 +231,7 @@ const Home = () => {
                   allRecords={allRecords}
                   setAllRecords={setAllRecords}
                   selectedcategory={selectedcategory}
+                  refetchRecord={sortTransaction}
                 />
               </div>
               <p className="font-semibold text-base"> Yesterday </p>

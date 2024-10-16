@@ -3,9 +3,10 @@ import { format } from "date-fns";
 import FoodExpense from "../../public/icons/FoodExpenseIcon";
 import RentIcon from "../../public/icons/RentIcon";
 import IconCategory from "../../util/FindCategoryIcon";
-import { MdEdit } from "react-icons/md";
+
 const OneRecord = (props) => {
-  const { text, image, time, color, money, transaction_type } = props;
+  const { text, image, time, color, money, transaction_type, handleDelete } =
+    props;
   // const date = new Date(time);
   // const farmated = isNaN(date) ? "inValidtime" : format(date, "HH:mm");
   const iconcolor = transaction_type === "Expense" ? "#F54949" : "#23E01F";
@@ -29,7 +30,8 @@ const OneRecord = (props) => {
           <p className="font-normal text-base">{text}</p>
           <p className="font-normal text-xs text-[#6B7280]">
             {" "}
-            {format(Date(time), "MMM:dd HH:mm")}
+            {time}
+            {/* {format(Date(time), "MMM:dd HH:mm")} */}
           </p>
         </div>
       </div>
@@ -38,7 +40,12 @@ const OneRecord = (props) => {
         style={{ color: iconcolor }}
       >
         {incomeorexp}
-        {money} <MdEdit />
+        {money} <button onClick={handleDelete}>X</button>
+        {/* <script>
+          {function handleDelete() {
+            alert("Your file is being uploaded!");
+          }}
+        </script> */}
       </p>
 
       {/* <svg

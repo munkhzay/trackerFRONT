@@ -2,7 +2,7 @@ import Category from "./Category";
 import axios from "axios";
 
 const Categories = (props) => {
-  const { categories, setCategory, onSelectCategory } = props;
+  const { categories, setCategory, onSelectCategory, refetchRecord } = props;
 
   // const onSelectCategory = (onecategory) => {
   //   console.log(onecategory.categoryid);
@@ -25,6 +25,8 @@ const Categories = (props) => {
       )
       .then((response) => {
         console.log(response);
+
+        refetchRecord();
       })
       .catch((error) => {
         console.log(error);

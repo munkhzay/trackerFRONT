@@ -1,20 +1,10 @@
-import useSWR from "swr";
 import OneRecord from "./OneRecord";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import RentIcon from "../../public/icons/RentIcon";
-import FoodExpense from "../../public/icons/FoodExpenseIcon";
 import { useQueryState } from "next-usequerystate";
-import MyCategories from "./Category";
 
 const Transaction = (props) => {
-  const {
-    myrecords,
-
-    categories,
-  } = props;
-
-  const [allselectedcategory, setAllselectedcategory] = useState([]);
+  const { myrecords, categories, refetchRecord } = props;
   const [search] = useQueryState("");
   const filteredproducts = myrecords.filter((item) => {
     if (!search) return true;
@@ -22,48 +12,39 @@ const Transaction = (props) => {
   });
 
   const oneCategorySelected = categories?.filter(
-    (category) => category.selected === false
+    (category) => category.selected === true
   );
-
   const selectedeyesRecords = oneCategorySelected?.map((category) => {
     const recordsEye = filteredproducts.filter(
       (record) => record.categoryid === category.categoryid
     );
-
     return recordsEye;
   });
-  // console.log(selectedeyesRecords);
 
-  // const selectedEyesCategory = filteredproducts.filter((onerecord) => {
-  //   if (
-  //     onerecord.categoryid === selectedcategory.categoryid &&
-  //     selectedcategory.selected === true
-  //   )
-  //     return onerecord;
-  //   if (onerecord.categoryid !== selectedcategory.categoryid) return;
-  // });
-  // const data = () => {
-  //   setAllselectedcategory(selectedEyesCategory);
-  // };
+  const deleteRecord = async (recordid) => {
+    try {
+      const response = await axios.delete(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/transaction/delete/${recordid}`
+      );
+      console.log(response);
+      refetchRecord();
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-  // console.log(allselectedcategory);
-  // const allSelectedRecords = selectedcategory.map((product) => {
-  //   const filteredrecordsByCategories = filteredproducts.filter(
-  //     (record) => record.categoryid === product.categoryid
-  //   );
-
-  //   return filteredrecordsByCategories;
-  // });
   return (
     <div>
       {selectedeyesRecords?.map((onerecord, index) => (
         <div key={index}>
           {onerecord.map((record) => (
             <OneRecord
+              handleDelete={() => deleteRecord(record.recordid)}
               key={record.userid}
               text={record.categoryname}
               transaction_type={record.transaction}
               money={record.amount}
+              time={record.createdat}
             />
           ))}
         </div>
@@ -72,15 +53,3 @@ const Transaction = (props) => {
   );
 };
 export default Transaction;
-
-const numbers = [1, 2, 3];
-
-const selectedNumbers = [1];
-
-const filterddNUmbers = numbers.filter((number) => {
-  if (selectedNumbers.includes(number)) {
-    return true;
-  } else {
-    return false;
-  }
-});
