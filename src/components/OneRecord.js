@@ -3,7 +3,7 @@ import { format } from "date-fns";
 import FoodExpense from "../../public/icons/FoodExpenseIcon";
 import RentIcon from "../../public/icons/RentIcon";
 import IconCategory from "../../util/FindCategoryIcon";
-
+import { MdEdit } from "react-icons/md";
 const OneRecord = (props) => {
   const { text, image, time, color, money, transaction_type } = props;
   // const date = new Date(time);
@@ -33,10 +33,14 @@ const OneRecord = (props) => {
           </p>
         </div>
       </div>
-      <p className={`font-semibold text-base ]`} style={{ color: iconcolor }}>
+      <p
+        className={`font-semibold text-base flex gap-10`}
+        style={{ color: iconcolor }}
+      >
         {incomeorexp}
-        {money}{" "}
+        {money} <MdEdit />
       </p>
+
       {/* <svg
         xmlns="http://www.w3.org/2000/svg"
         x="0px"

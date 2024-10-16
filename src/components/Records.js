@@ -10,14 +10,10 @@ import MyCategories from "./Category";
 const Transaction = (props) => {
   const {
     myrecords,
-    selectedcategory,
-    setMyrecords,
-    allRecords,
-    setAllRecords,
-    categoryname,
+
     categories,
   } = props;
-  // console.log(selectedcategory);
+
   const [allselectedcategory, setAllselectedcategory] = useState([]);
   const [search] = useQueryState("");
   const filteredproducts = myrecords.filter((item) => {
@@ -25,18 +21,18 @@ const Transaction = (props) => {
     return item.categoryname.toLowerCase().includes(search?.toLowerCase());
   });
 
-  const oneCategorySelected = categories.filter(
+  const oneCategorySelected = categories?.filter(
     (category) => category.selected === false
   );
 
-  const selectedeyesRecords = oneCategorySelected.map((category) => {
+  const selectedeyesRecords = oneCategorySelected?.map((category) => {
     const recordsEye = filteredproducts.filter(
       (record) => record.categoryid === category.categoryid
     );
-    console.log(recordsEye);
+
     return recordsEye;
   });
-  console.log(selectedeyesRecords);
+  // console.log(selectedeyesRecords);
 
   // const selectedEyesCategory = filteredproducts.filter((onerecord) => {
   //   if (
