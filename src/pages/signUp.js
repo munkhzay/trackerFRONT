@@ -45,16 +45,20 @@ const SignUp = () => {
   //     });
   // };
 
-  const createUser = async() => {
+  const createUser = async () => {
     try {
-      const response= await axios.post('http://localhost:8070/api/signup',{
-        email:'',
-        username:''
-      })}
-      catch (error){console.log(error)}
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/signup`,
+        {
+          email: "",
+          username: "",
+        }
+      );
+    } catch (error) {
+      console.log(error);
     }
-    
   };
+
   return (
     <div className="flex w-screen h-screen">
       <div className="w-3/5 bg-[#FFFFFF] flex  justify-center items-center">

@@ -29,7 +29,9 @@ const Home = () => {
   const [selectedcategory, setSelectedCategory] = useState([]);
 
   const getCategories = async () => {
-    const { data } = await axios.get("http://localhost:8070/api/category");
+    const { data } = await axios.get(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/category`
+    );
     const formattedCategories = data.map((category) => {
       return {
         ...category,
@@ -45,7 +47,7 @@ const Home = () => {
   const sortTransaction = async () => {
     try {
       const { data } = await axios.get(
-        "http://localhost:8070/api/transaction/join"
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/transaction/join`
       );
       setMyrecords(data);
       setAllRecords(data);

@@ -20,7 +20,9 @@ const Categories = (props) => {
 
   const deleteCategory = async (categoryid) => {
     await axios
-      .delete(`http://localhost:8070/api/category/${categoryid}`)
+      .delete(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/category/${categoryid}`
+      )
       .then((response) => {
         console.log(response);
       })

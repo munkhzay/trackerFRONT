@@ -12,7 +12,7 @@ const SignIn = () => {
 
   const Login = async () => {
     await axios
-      .post("http://localhost:8070/api/signIn", {
+      .post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/signIn`, {
         email: email,
         userpassword: password,
       })

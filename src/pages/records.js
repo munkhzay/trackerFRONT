@@ -254,9 +254,10 @@ const Records = () => {
                 {categories.map((category1, index) => {
                   return (
                     <div
+                      key={index}
                       onClick={() => handleCategory(selectedEyes[index], index)}
                     >
-                      <MyCategories key={index} categoryName={category1} />
+                      <MyCategories categoryName={category1} />
                     </div>
                   );
                 })}

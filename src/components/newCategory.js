@@ -10,7 +10,7 @@ const NewCategories = (props) => {
 
   const handlecategories = async () => {
     await axios
-      .post("http://localhost:8070/api/category", {
+      .post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/category`, {
         categoryname: categoryName,
         description: "Flintstone",
       })

@@ -40,7 +40,7 @@ const AddRecord = (props) => {
   const createCategory = async () => {
     if (!amount || !value || !name) toast.error("something went wrong");
     await axios
-      .post("http://localhost:8070/api/transaction", {
+      .post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/transaction`, {
         userid: 51,
         recordname: name,
         amount: amount,
@@ -61,7 +61,7 @@ const AddRecord = (props) => {
   useEffect(() => {
     const getcategory = async () => {
       await axios
-        .get("http://localhost:8070/api/category")
+        .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/category`)
         .then(function (response) {
           // handle success
           console.log(response);
@@ -147,12 +147,14 @@ const AddRecord = (props) => {
                   {" "}
                   Find or choose category
                 </option>
-                {categories.map((record) => {
+                {categories.map((record, index) => {
                   // console.log(select);
                   return (
-                    <option value={record.categoryid}>
-                      {record.categoryname}
-                    </option>
+                    <div key={index}>
+                      <option value={record.categoryid}>
+                        {record.categoryname}
+                      </option>
+                    </div>
                   );
                 })}
                 {/* <option value="Food" className="px-[18px] py-2 flex gap-3">

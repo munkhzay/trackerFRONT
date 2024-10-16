@@ -24,9 +24,12 @@ const Transaction = (props) => {
     if (!search) return true;
     return item.categoryname.toLowerCase().includes(search?.toLowerCase());
   });
-  const datas = categories.filter((category) => category.selected === false);
-  console.log(datas);
-  const selectedeyesRecords = datas.map((category) => {
+
+  const oneCategorySelected = categories.filter(
+    (category) => category.selected === false
+  );
+
+  const selectedeyesRecords = oneCategorySelected.map((category) => {
     const recordsEye = filteredproducts.filter(
       (record) => record.categoryid === category.categoryid
     );
