@@ -1,9 +1,9 @@
 import Link from "next/link";
-import Logo from "../../public/icons/Logo";
 import { useState } from "react";
 import axios from "axios";
 import { toast, Toaster } from "sonner";
 import { useRouter } from "next/router";
+import Logo from "../../../public/icons/Logo";
 
 const SignUp = () => {
   const [name, setName] = useState("");
@@ -25,39 +25,39 @@ const SignUp = () => {
     setRePassword(event.target.value);
   };
 
-  // const createUser = async () => {
-  //   await axios
-  //     .post("http://localhost:8070/api/signup", {
-  //       email: email,
-  //       username: name,
-  //       userpassword: password,
-  //       avatar_img: rePassword,
-  //     })
-  //     .then(function (response) {
-  //       console.log(response);
-  //       localStorage.setItem("userid", response.data[0].userid);
-  //       if (password != rePassword) return toast("password error");
-  //       if (password.length <= 7) return toast("password urt baga bainaa");
-  //       else return router.push("/signIn");
-  //     })
-  //     .catch(function (error) {
-  //       console.log(error);
-  //     });
-  // };
-
   const createUser = async () => {
-    try {
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/signup`,
-        {
-          email: "",
-          username: "",
-        }
-      );
-    } catch (error) {
-      console.log(error);
-    }
+    await axios
+      .post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/signup`, {
+        email: email,
+        username: name,
+        userpassword: password,
+        avatar_img: rePassword,
+      })
+      .then(function (response) {
+        console.log(response);
+        localStorage.setItem("userid", response.data[0].userid);
+        if (password != rePassword) return toast("password error");
+        if (password.length <= 7) return toast("password urt baga bainaa");
+        else return router.push("/auth/signIn");
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
+
+  // const createUser = async () => {
+  //   try {
+  //     const response = await axios.post(
+  //       `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/signup`,
+  //       {
+  //         email: "",
+  //         username: "",
+  //       }
+  //     );
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   return (
     <div className="flex w-screen h-screen">
@@ -127,21 +127,3 @@ const SignUp = () => {
 };
 
 export default SignUp;
-
-// const signUpClick = () => {
-//   const information = {
-//     name: name,
-//     email: email,
-//     password: password,
-//   };
-//   if (password !== rePassword) {
-//     console.log("Davtsan password buruu baina");
-//   } else {
-//   }
-//   axios.post("http://localhost:8000/user", {
-//     email: email,
-//     name: name,
-//     password: password,
-//     avatar_img: "https://i.pravatar.cc/300",
-//   });
-// };

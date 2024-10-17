@@ -2,7 +2,7 @@ import Category from "./Category";
 import axios from "axios";
 
 const Categories = (props) => {
-  const { categories, setCategory, onSelectCategory, refetchRecord } = props;
+  const { categories, onSelectCategory, refetchRecord } = props;
 
   // const onSelectCategory = (onecategory) => {
   //   console.log(onecategory.categoryid);

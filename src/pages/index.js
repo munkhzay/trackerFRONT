@@ -1,24 +1,21 @@
 import Navbar from "../components/Navbar";
-import { useEffect, useState } from "react";
-import MyCategories from "@/components/Category";
+import { useEffect, useReducer, useState } from "react";
 import PlusSign from "../../public/icons/PlusSign";
-import OneRecord from "../components/OneRecord";
 import { FaChevronLeft, FaSearchengin } from "react-icons/fa6";
 import { FaAngleRight } from "react-icons/fa6";
-import RentIcon from "../../public/icons/RentIcon";
-import FoodExpense from "../../public/icons/FoodExpenseIcon";
 import axios from "axios";
 import AddRecord from "@/components/AddRecord";
-import Recor from "@/components/Records";
-import Link from "next/link";
-import newCategories from "@/components/newCategory";
 import NewCategories from "@/components/newCategory";
-import IconCategory from "../../util/FindCategoryIcon";
 import { useQueryState } from "next-usequerystate";
 import Categories from "@/components/Categories";
 import Transaction from "@/components/Records";
+import { useRouter } from "next/router";
+import { useAuthContext } from "@/providers/AuthProvider";
 
 const Home = () => {
+  const router = useRouter();
+  const { currentUser, isLoading } = useAuthContext();
+
   const [showAdd, setShowAdd] = useState(false);
   const [showcategory, setShowcategory] = useState(false);
   const [selected, setSelected] = useState("All");
@@ -26,9 +23,14 @@ const Home = () => {
   const [allRecords, setAllRecords] = useState([]);
   const [category, setCategory] = useState();
   const [search, setSearch] = useQueryState("search");
-  const [selectedcategory, setSelectedCategory] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState([]);
   const [isChecked, setIsChecked] = useState(false);
-
+  console.log(currentUser, isLoading);
+  useEffect(() => {
+    if (!currentUser && !isLoading) {
+      router.push("/auth/signIn");
+    }
+  }, [currentUser, isLoading]);
   const handleCheckboxChange = (e) => {
     setIsChecked(e.target.checked);
   };
@@ -87,7 +89,6 @@ const Home = () => {
     setCategory(updatedCategory);
   };
 
-  console.log(category);
   const handleAll = () => {
     setMyrecords(allRecords);
   };
@@ -101,13 +102,17 @@ const Home = () => {
   const handlecategory = () => {
     setShowcategory(!showcategory);
   };
-
-  console.log(category);
   const handleClear = () => {
-    console.log("hhh");
-    category.map((onecategory) => {
-      return onecategory.selected === true;
+    const clearCategory = category.map((category) => {
+      if (category.selected === true) {
+        return {
+          ...category,
+          selected: !category.selected,
+        };
+      }
+      return category;
     });
+    setCategory(clearCategory);
   };
 
   return (
@@ -192,7 +197,6 @@ const Home = () => {
               <div className="flex flex-col gap-2">
                 <Categories
                   categories={category}
-                  setCategory={setCategory}
                   onSelectCategory={onSelectCategory}
                   refetchRecord={getCategories}
                 />
@@ -230,7 +234,7 @@ const Home = () => {
                   myrecords={myrecords}
                   allRecords={allRecords}
                   setAllRecords={setAllRecords}
-                  selectedcategory={selectedcategory}
+                  selectedcategory={selectedCategory}
                   refetchRecord={sortTransaction}
                 />
               </div>

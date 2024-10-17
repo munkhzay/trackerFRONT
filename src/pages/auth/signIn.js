@@ -1,25 +1,32 @@
 import axios from "axios";
-import Logo from "../../public/icons/Logo";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Router, useRouter } from "next/navigation";
 import { toast, Toaster } from "sonner";
+import Logo from "../../../public/icons/Logo";
+import { useAuthContext } from "@/providers/AuthProvider";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
+  const { currentUser, isLoading, signin } = useAuthContext();
 
-  const Login = async () => {
+  useEffect(() => {
+    if (currentUser && !isLoading) {
+      router.push("/");
+    }
+  }, [currentUser, isLoading]);
+
+  const login = async () => {
     await axios
       .post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/signIn`, {
         email: email,
         userpassword: password,
       })
       .then(function (response) {
-        console.log(response);
-        if (response.data.length === 1) return router.push("/");
-        else return toast("unsuccessful");
+        console.log(response.data);
+        signin(response.data[0].email, response.data[0].userid);
       })
       .catch(function (error) {
         console.log(error);
@@ -55,7 +62,7 @@ const SignIn = () => {
             />
             <Toaster />
             <button
-              onClick={() => Login()}
+              onClick={login}
               className="bg-[#0166FF] justify-center font-normal text-xl flex items-center text-white text-center py-2.5 w-full rounded-3xl"
             >
               Log in
