@@ -3,7 +3,7 @@ import { format } from "date-fns";
 import FoodExpense from "../../public/icons/FoodExpenseIcon";
 import RentIcon from "../../public/icons/RentIcon";
 import IconCategory from "../../util/FindCategoryIcon";
-
+import { TbHttpDelete } from "react-icons/tb";
 const OneRecord = (props) => {
   const { text, image, time, color, money, transaction_type, handleDelete } =
     props;
@@ -40,7 +40,10 @@ const OneRecord = (props) => {
         style={{ color: iconcolor }}
       >
         {incomeorexp}
-        {money} <button onClick={handleDelete}>X</button>
+        {money}{" "}
+        <button style={{ color: "gray" }} onClick={handleDelete}>
+          <TbHttpDelete />
+        </button>
         {/* <script>
           {function handleDelete() {
             alert("Your file is being uploaded!");

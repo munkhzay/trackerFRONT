@@ -26,14 +26,7 @@ ChartJS.register(
 
 const MyChart = () => {
   const [amountData, setAmountData] = useState();
-  const [amount, setAmount] = useState();
-  // const router = useRouter();
-  // const { currentUser, isLoading } = useAuthContext;
-  // useEffect(() => {
-  //   if (!currentUser && !isLoading) {
-  //     router.push("/auth/signIn");
-  //   }
-  // }, [!currentUser, isLoading]);
+  const [date, setDate] = useState();
   const recordData = async () => {
     try {
       const { data } = await axios.get(
@@ -48,40 +41,23 @@ const MyChart = () => {
     recordData();
   }, []);
 
-  console.log(amountData);
   const circleAmount = amountData?.map((one) => {
-    return one.amount;
+    return one.createdat;
   });
-  const expenseAmount = amountData?.map((onedata) => {
-    if (onedata.transaction === "Expense") return onedata.amount;
-  });
-  const incomeAllAmount = amountData?.map((onedata) => {
-    if (onedata.transaction === "Income") return onedata.amount;
-  });
+  // const time = amountData.map((data) => {
+  //   data.
+  // });
+  // const expenseAmount = amountData?.map((onedata) => {
+  //   if (onedata.transaction === "Expense") return onedata.amount;
+  // });
+  // const incomeAllAmount = amountData?.map((onedata) => {
+  //   if (onedata.transaction === "Income") return onedata.amount;
+  // });
 
   const categoryName = amountData?.map((name) => {
     return name.categoryname;
   });
-  console.log(circleAmount);
-  const data = {
-    labels: categoryName,
-    datasets: [
-      {
-        label: "Expense",
-        data: expenseAmount,
-        backgroundColor: ["#f05e0a "],
-
-        borderWidth: 1,
-      },
-      {
-        label: "Income",
-        data: incomeAllAmount,
-        backgroundColor: ["#099139 "],
-
-        borderWidth: 1,
-      },
-    ],
-  };
+  // console.log(circleAmount);
 
   const options = {
     responsive: true,
@@ -91,6 +67,38 @@ const MyChart = () => {
       },
     },
   };
+
+  const data = {
+    labels: [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ],
+    datasets: [
+      {
+        label: "Expense",
+        // data: expenseAmount,
+        backgroundColor: ["#eb4934 "],
+        borderWidth: 1,
+      },
+      {
+        label: "Income",
+        // data: incomeAllAmount,
+        backgroundColor: ["#34eb8f"],
+        borderWidth: 1,
+      },
+    ],
+  };
+
   const optionsCircle = {
     responsive: true,
     plugins: {
@@ -114,24 +122,30 @@ const MyChart = () => {
           "#d63118",
           "#ede611",
         ],
-
         borderWidth: 1,
       },
     ],
   };
   return (
-    <div className="flex items-center gap-7">
-      <div
-        style={{ height: "200px", width: "400px", backgroundColor: "white" }}
-      >
-        <Bar data={data} options={options} />
-      </div>{" "}
-      <div>
-        <Doughnut data={ChartData} options={optionsCircle} />
+    <div className="flex justify-evenly items-center gap-7 ">
+      <div className="w-full bg-white rounded-2xl">
+        <div className="py-4 pl-6">
+          <p className="font-semibold text-base"> Income - Expense</p>
+        </div>
+        <div className="h-[284px] p-5">
+          {" "}
+          <Bar data={data} options={options} />
+        </div>
       </div>
-      {/* {amountData.map((amount, index) => {
-        return <div key={index}>{amount.categoryname}</div>;
-      })} */}
+      <div className="w-full bg-white rounded-2xl ">
+        <div className="px-6 py-4 justify-between flex">
+          <p className="font-semibold text-base">Income - Expense</p>
+          <p className="font-normal text-base">Jun 1 - Nov 30</p>
+        </div>
+        <div className="p-5 h-[284px] ">
+          <Doughnut data={ChartData} options={optionsCircle} />
+        </div>
+      </div>
     </div>
   );
 };

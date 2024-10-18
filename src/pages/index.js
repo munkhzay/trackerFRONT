@@ -232,21 +232,14 @@ const Home = () => {
                   onSelectCategory={onSelectCategory}
                   categories={category}
                   myrecords={myrecords}
-                  allRecords={allRecords}
-                  setAllRecords={setAllRecords}
-                  selectedcategory={selectedCategory}
+                  // allRecords={allRecords}
+                  // setAllRecords={setAllRecords}
+                  // selectedcategory={selectedCategory}
                   refetchRecord={sortTransaction}
                 />
               </div>
               <p className="font-semibold text-base"> Yesterday </p>
-              <div className="flex flex-col gap-3">
-                {/* <Recor
-                  myrecords={myrecords}
-                  allRecords={allRecords}
-                  setAllRecords={setAllRecords}
-                  categories={category}
-                /> */}
-              </div>
+              <div className="flex flex-col gap-3"></div>
             </div>
           </div>
         </div>
