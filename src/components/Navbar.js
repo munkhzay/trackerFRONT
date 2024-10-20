@@ -1,7 +1,9 @@
 import Link from "next/link";
 import Logo from "../../public/icons/Logo";
-
-const Navbar = () => {
+import { FaSignOutAlt } from "react-icons/fa";
+import { Toaster } from "sonner";
+const Navbar = (props) => {
+  const { signOut, handleAdd } = props;
   return (
     <div className="bg-white w-full px-[120px] py-4 flex justify-between max-w-screen-xl">
       <div className="flex gap-6 items-center">
@@ -14,10 +16,17 @@ const Navbar = () => {
         </Link>
       </div>
       <div className="flex items-center gap-6">
-        <button className="bg-[#0166FF] py-1.5 px-3 text-white rounded-3xl text-base">
+        <button
+          onClick={handleAdd}
+          className="bg-[#0166FF] py-1.5 px-3 text-white rounded-3xl text-base"
+        >
           + Record
         </button>
-        <div className="rounded-full w-10 h-10 bg-[url('/images/Profile.jpeg')]"></div>
+        <div className="rounded-full w-10 h-10 bg-[url('/images/Profile.jpeg')]"></div>{" "}
+        <Toaster />
+        <button className="border-2 border-cyan-600" onClick={signOut}>
+          <FaSignOutAlt />
+        </button>
       </div>
     </div>
   );

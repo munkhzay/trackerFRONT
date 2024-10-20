@@ -24,9 +24,9 @@ ChartJS.register(
   Legend
 );
 
-const MyChart = () => {
+const MyChart = (props) => {
+  const { category } = props;
   const [amountData, setAmountData] = useState();
-  const [date, setDate] = useState();
   const recordData = async () => {
     try {
       const { data } = await axios.get(
@@ -41,24 +41,17 @@ const MyChart = () => {
     recordData();
   }, []);
 
-  const circleAmount = amountData?.map((one) => {
-    return one.createdat;
-  });
-  // const time = amountData.map((data) => {
-  //   data.
-  // });
-  // const expenseAmount = amountData?.map((onedata) => {
-  //   if (onedata.transaction === "Expense") return onedata.amount;
-  // });
-  // const incomeAllAmount = amountData?.map((onedata) => {
-  //   if (onedata.transaction === "Income") return onedata.amount;
-  // });
+  const expensetime = Array(12).fill(0);
+  const incometime = Array(12).fill(0);
 
-  const categoryName = amountData?.map((name) => {
-    return name.categoryname;
+  amountData?.forEach((data) => {
+    const monthIndex = new Date(data.description).getMonth();
+    if (data.transaction === "Expense") {
+      expensetime[monthIndex] += data.amount;
+    } else if (data.transaction === "Income") {
+      incometime[monthIndex] += data.amount;
+    }
   });
-  // console.log(circleAmount);
-
   const options = {
     responsive: true,
     plugins: {
@@ -86,19 +79,37 @@ const MyChart = () => {
     datasets: [
       {
         label: "Expense",
-        // data: expenseAmount,
+        data: expensetime,
         backgroundColor: ["#eb4934 "],
         borderWidth: 1,
       },
       {
         label: "Income",
-        // data: incomeAllAmount,
+        data: incometime,
         backgroundColor: ["#34eb8f"],
         borderWidth: 1,
       },
     ],
   };
-
+  const circleAmount = amountData?.map((one) => {
+    return one.amount;
+  });
+  const categoryName = category?.map((name) => {
+    return name.categoryname;
+  });
+  const [allamount, setAllamount] = useState([]);
+  const sumAmount = category?.map((cat) => {
+    const allcatAmount = amountData?.filter(
+      (amount) => amount.categoryname === cat.categoryname
+    );
+    const sumCat = allcatAmount?.map((onecat) => {
+      return onecat.amount;
+    });
+    const sumonearry = sumCat?.reduce((amount, prev) => amount + prev, 0);
+    console.log(sumonearry);
+    return sumonearry;
+  });
+  console.log(sumAmount);
   const optionsCircle = {
     responsive: true,
     plugins: {
@@ -113,7 +124,7 @@ const MyChart = () => {
     datasets: [
       {
         label: "My Dataset",
-        data: circleAmount,
+        data: sumAmount,
         backgroundColor: [
           "#bd1577",
           "#1555bd",

@@ -11,11 +11,11 @@ import Categories from "@/components/Categories";
 import Transaction from "@/components/Records";
 import { useRouter } from "next/router";
 import { useAuthContext } from "@/providers/AuthProvider";
+import { toast } from "sonner";
 
 const Home = () => {
   const router = useRouter();
   const { currentUser, isLoading } = useAuthContext();
-
   const [showAdd, setShowAdd] = useState(false);
   const [showcategory, setShowcategory] = useState(false);
   const [selected, setSelected] = useState("All");
@@ -31,6 +31,7 @@ const Home = () => {
       router.push("/auth/signIn");
     }
   }, [currentUser, isLoading]);
+
   const handleCheckboxChange = (e) => {
     setIsChecked(e.target.checked);
   };
@@ -114,6 +115,19 @@ const Home = () => {
     });
     setCategory(clearCategory);
   };
+  const signOut = () => {
+    localStorage.clear();
+    // if (!currentUser && !isLoading) {
+    //   router.push("/auth/signIn");
+    // }
+    // try {
+    //   await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/signOut`);
+    //   // toast("are you sure sign out?");
+    //   router.push("/auth/signIn");
+    // } catch (error) {
+    //   console.error("Sign out error:", error);
+    // }
+  };
 
   return (
     <div>
@@ -131,7 +145,7 @@ const Home = () => {
         </div>
       )}
       <div className={`bg-[#F3F4F6] flex flex-col gap-8 items-center relative`}>
-        <Navbar />
+        <Navbar signOut={signOut} handleAdd={() => handleAdd()} />,
         <div className="flex gap-6">
           <div className="bg-white flex flex-col px-6 py-4 w-[282px] gap-6 rounded-xl h-fit border border-[#E5E7EB]">
             <div className="flex flex-col gap-6">

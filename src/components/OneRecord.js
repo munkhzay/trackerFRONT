@@ -39,7 +39,7 @@ const OneRecord = (props) => {
         className={`font-semibold text-base flex gap-10`}
         style={{ color: iconcolor }}
       >
-        {incomeorexp}
+        {/* {incomeorexp} */}
         {money}{" "}
         <button style={{ color: "gray" }} onClick={handleDelete}>
           <TbHttpDelete />

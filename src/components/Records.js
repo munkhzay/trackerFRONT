@@ -32,7 +32,7 @@ const Transaction = (props) => {
       console.error(error);
     }
   };
-
+  // const incomeorexp = transaction_type === "Expense" ? "-" : "+";
   return (
     <div>
       {selectedeyesRecords?.map((onerecord, index) => (
@@ -43,8 +43,11 @@ const Transaction = (props) => {
               key={record.userid}
               text={record.categoryname}
               transaction_type={record.transaction}
-              money={record.amount}
-              time={record.createdat}
+              money={[
+                record.transaction === "Expense" ? "-" : "+",
+                record.amount,
+              ]}
+              time={record.description}
             />
           ))}
         </div>
