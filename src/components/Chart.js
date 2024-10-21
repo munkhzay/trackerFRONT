@@ -42,11 +42,12 @@ const MyChart = () => {
   }, []);
 
   const circleAmount = amountData?.map((one) => {
-    return one.createdat;
+    return one.amount;
   });
-  // const time = amountData.map((data) => {
-  //   data.
-  // });
+  const time = amountData?.map((data) =>
+    new Date(data.createdat).toLocaleDateString()
+  );
+  console.log(time);
   // const expenseAmount = amountData?.map((onedata) => {
   //   if (onedata.transaction === "Expense") return onedata.amount;
   // });
@@ -86,7 +87,7 @@ const MyChart = () => {
     datasets: [
       {
         label: "Expense",
-        // data: expenseAmount,
+        data: time,
         backgroundColor: ["#eb4934 "],
         borderWidth: 1,
       },
