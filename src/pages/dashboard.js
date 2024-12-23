@@ -11,6 +11,7 @@ import { Cart } from "../../public/icons/Cart";
 import { Wifi } from "../../public/icons/Wifi";
 import OneRecord from "@/components/OneRecord";
 import Transaction from "@/components/Records";
+import AddRecord from "@/components/AddRecord";
 
 const Dashboard = () => {
   const [amountData, setAmountData] = useState();
@@ -18,6 +19,7 @@ const Dashboard = () => {
   const [category, setCategory] = useState([]);
   const [myrecords, setMyrecords] = useState([]);
   const [allRecords, setAllRecords] = useState([]);
+  const [showAdd, setShowAdd] = useState(false);
   // // const router = useRouter();
   // // const { currentUser, isLoading } = useAuthContext;
   // // useEffect(() => {
@@ -107,44 +109,58 @@ const Dashboard = () => {
     (currentValue, previousValue) => previousValue + currentValue
   );
   const cash = sumIncome - sumExpense;
-  console.log(amountData);
+
+  const handleAdd = () => {
+    setShowAdd(!showAdd);
+  };
+  const signOut = () => {
+    localStorage.clear();
+  };
   return (
-    <div className="bg-[#F3F4F6] flex flex-col  gap-8">
-      <Navbar />
-      <div className="flex flex-col gap-6 w-full px-[120px]">
-        <div className="flex gap-6">
-          <div className="w-full rounded-[18px] bg-[#0166FF] relative">
-            <div className="absolute top-7 left-10">
-              {" "}
-              <Cart />
-            </div>{" "}
-            <p className="absolute bottom-20 left-6 text-gray-200">Cash</p>{" "}
-            <p className="absolute bottom-14 left-6 text-white font-bold">
-              {cash}
-            </p>
-            <div className="absolute bottom-12 right-10">
-              <Wifi />
-            </div>
-          </div>
-          <Income
-            color={"#84CC16"}
-            title={"Your Income"}
-            money={sumIncome}
-            text={"Your Income Amount"}
-            description={"32% from last month"}
-            icon={<IncomeLogo />}
-          />
-          <Income
-            color={"#0166FF"}
-            title={"Your Expense"}
-            money={sumExpense}
-            text={"Your Expense Amount"}
-            description={"32% from last month"}
-            icon={<ExpenseLogo />}
-          />
+    <div>
+      {showAdd && (
+        <div className="z-30 fixed top-0 left-0 right-0 bottom-0 bg-gray-400 flex justify-center items-center">
+          <AddRecord onCloseModal={handleAdd} refetchRecord={sortTransaction} />
         </div>
-      </div>
-      {/* <div className="flex gap-6 px-[120px]">
+      )}
+      <div className="bg-[#F3F4F6] flex flex-col  gap-8">
+        <Navbar signOut={signOut} handleAdd={() => handleAdd()} />
+        <div className="flex flex-col gap-6 w-full px-[120px]">
+          <div className="flex gap-6">
+            <div className="w-full rounded-[18px] bg-[#0166FF] relative">
+              <div className="absolute top-7 left-10">
+                {" "}
+                <Cart />
+              </div>{" "}
+              <p className="absolute bottom-20 left-6 text-gray-200">
+                Cash
+              </p>{" "}
+              <p className="absolute bottom-14 left-6 text-white font-bold">
+                {cash}
+              </p>
+              <div className="absolute bottom-12 right-10">
+                <Wifi />
+              </div>
+            </div>
+            <Income
+              color={"#84CC16"}
+              title={"Your Income"}
+              money={sumIncome}
+              text={"Your Income Amount"}
+              description={"32% from last month"}
+              icon={<IncomeLogo />}
+            />
+            <Income
+              color={"#0166FF"}
+              title={"Your Expense"}
+              money={-sumExpense}
+              text={"Your Expense Amount"}
+              description={"32% from last month"}
+              icon={<ExpenseLogo />}
+            />
+          </div>
+        </div>
+        {/* <div className="flex gap-6 px-[120px]">
         <div className="w-full bg-white">
           <div className="py-4 pl-6">
             <p className="font-semibold text-base"> Income - Expense</p>
@@ -163,24 +179,24 @@ const Dashboard = () => {
           </div>
         </div>
       </div> */}
-      <div className="px-[120px] flex flex-col gap-8">
-        <div>
-          {" "}
-          <MyChart />
-        </div>
-        <div className="w-fill ">
-          {" "}
-          <div className="w-full px-6 py-3 border bg-white border-[#E5E7EB] items-center justify-between flex rounded-xl font-bold">
+        <div className="px-[120px] flex flex-col gap-8">
+          <div>
             {" "}
-            Last Records
+            <MyChart category={category} />
           </div>
-          <Transaction
-            onSelectCategory={onSelectCategory}
-            categories={category}
-            myrecords={myrecords}
-            refetchRecord={sortTransaction}
-          />
-          {/* {amountData?.map((record) => {
+          <div className="w-fill ">
+            {" "}
+            <div className="w-full px-6 py-3 border bg-white border-[#E5E7EB] items-center justify-between flex rounded-xl font-bold">
+              {" "}
+              Last Records
+            </div>
+            <Transaction
+              onSelectCategory={onSelectCategory}
+              categories={category}
+              myrecords={myrecords}
+              refetchRecord={sortTransaction}
+            />
+            {/* {amountData?.map((record) => {
             return (
               <div key={record.userid}>
                 <OneRecord
@@ -192,8 +208,9 @@ const Dashboard = () => {
               </div>
             );
           })} */}
+          </div>{" "}
         </div>{" "}
-      </div>{" "}
+      </div>
     </div>
   );
 };

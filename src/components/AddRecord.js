@@ -9,7 +9,9 @@ import FoodExpense from "../../public/icons/FoodExpenseIcon";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { toast } from "sonner";
+import { useAuthContext } from "@/providers/AuthProvider";
 const AddRecord = (props) => {
+  const { currentUser, isLoading } = useAuthContext();
   const { onCloseModal, refetchRecord } = props;
   const [incomeExpense, setIncomeExpense] = useState("Expense");
   const [value, setValue] = useState("");
@@ -17,6 +19,8 @@ const AddRecord = (props) => {
   const [select, setSelect] = useState();
   const [categories, setCategories] = useState([]);
   const [name, setName] = useState("");
+  const [date, setDate] = useState();
+  const [time, setTime] = useState();
   const router = useRouter();
   const handleIncomeOrExpense = () => {
     // const { name } = props;
@@ -27,6 +31,7 @@ const AddRecord = (props) => {
       setIncomeExpense("Expense");
     }
   };
+  console.log(date);
   // const handleAdd = (e) => {
   //   setValue(e.target.value);
   // };
@@ -37,15 +42,16 @@ const AddRecord = (props) => {
   // const handleAdd3 = (e) => {
   //   setName(e.target.value);
   // };
+  const userid = currentUser.userid;
   const createCategory = async () => {
-    if (!amount || !value || !name) toast.error("something went wrong");
+    if (!amount || !date) toast.error("something went wrong");
     await axios
       .post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/transaction`, {
-        userid: 51,
+        userid: userid,
         recordname: name,
         amount: amount,
         transaction: incomeExpense,
-        description: value,
+        description: [date, time],
         categoryid: select,
       })
       .then(function (response) {
@@ -165,6 +171,7 @@ const AddRecord = (props) => {
               <div className="flex flex-col gap-2 w-full">
                 <p>Date</p>
                 <input
+                  onChange={(e) => setDate(e.target.value)}
                   type="date"
                   defaultValue={`${year}-${month}-${day}`}
                   className="py-3 px-4 bg-[#F9FAFB] border border-[#D1D5DB] rounded-lg"
@@ -173,6 +180,7 @@ const AddRecord = (props) => {
               <div className="flex flex-col gap-2 w-full">
                 <p>Time</p>
                 <input
+                  onChange={(e) => setTime(e.target.value)}
                   type="time"
                   defaultValue={`${hour}:${minutes}`}
                   className="py-3 px-4 bg-[#F9FAFB] border border-[#D1D5DB] rounded-lg"
