@@ -20,13 +20,13 @@ const Dashboard = () => {
   const [myrecords, setMyrecords] = useState([]);
   const [allRecords, setAllRecords] = useState([]);
   const [showAdd, setShowAdd] = useState(false);
-  // // const router = useRouter();
-  // // const { currentUser, isLoading } = useAuthContext;
-  // // useEffect(() => {
-  // //   if (!currentUser && !isLoading) {
-  // //     router.push("/auth/signIn");
-  // //   }
-  // // }, [!currentUser, isLoading]);
+  const router = useRouter();
+  const { currentUser, isLoadin, setCurrentUser } = useAuthContext;
+  useEffect(() => {
+    if (!currentUser && !isLoading) {
+      router.push("/auth/signIn");
+    }
+  }, [!currentUser, isLoading]);
   const recordData = async () => {
     try {
       const { data } = await axios.get(
@@ -113,9 +113,16 @@ const Dashboard = () => {
   const handleAdd = () => {
     setShowAdd(!showAdd);
   };
+
   const signOut = () => {
-    localStorage.clear();
+    setCurrentUser("");
+    const user = localStorage.getItem("user");
+    if (user.email === undefined) router.push("/auth/signIn");
   };
+  useEffect(() => {
+    signOut;
+  }, []);
+
   return (
     <div>
       {showAdd && (

@@ -15,7 +15,7 @@ import { toast } from "sonner";
 
 const Home = () => {
   const router = useRouter();
-  const { currentUser, isLoading } = useAuthContext();
+  const { currentUser, isLoading, setCurrentUser } = useAuthContext();
   const [showAdd, setShowAdd] = useState(false);
   const [showcategory, setShowcategory] = useState(false);
   const [selected, setSelected] = useState("All");
@@ -115,21 +115,15 @@ const Home = () => {
     });
     setCategory(clearCategory);
   };
-  const signOut = () => {
-    const user = localStorage.clear("user");
-    console.log(user);
-    if (user === undefined) {
-      router.push("/auth/signIn");
-    }
 
-    // try {
-    //   await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/signOut`);
-    //   // toast("are you sure sign out?");
-    //   router.push("/auth/signIn");
-    // } catch (error) {
-    //   console.error("Sign out error:", error);
-    // }
+  const signOut = () => {
+    setCurrentUser("");
+    const user = localStorage.getItem("user");
+    if (user.email === undefined) router.push("/auth/signIn");
   };
+  useEffect(() => {
+    signOut;
+  }, []);
 
   return (
     <div>
