@@ -27,7 +27,7 @@ const Home = () => {
   const [isChecked, setIsChecked] = useState(false);
   // console.log(currentUser, isLoading);
   useEffect(() => {
-    if (!currentUser && !isLoading) {
+    if (!currentUser && isLoading) {
       router.push("/auth/signIn");
     }
   }, [currentUser, isLoading]);

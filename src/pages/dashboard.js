@@ -21,12 +21,12 @@ const Dashboard = () => {
   const [allRecords, setAllRecords] = useState([]);
   const [showAdd, setShowAdd] = useState(false);
   const router = useRouter();
-  const { currentUser, isLoadin, setCurrentUser } = useAuthContext;
+  const { currentUser, isLoading, setCurrentUser } = useAuthContext;
   useEffect(() => {
-    if (!currentUser && !isLoading) {
+    if (!currentUser && isLoading) {
       router.push("/auth/signIn");
     }
-  }, [!currentUser, isLoading]);
+  }, [currentUser, isLoading]);
   const recordData = async () => {
     try {
       const { data } = await axios.get(
