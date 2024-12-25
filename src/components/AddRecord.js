@@ -36,12 +36,12 @@ const AddRecord = (props) => {
   //   setValue(e.target.value);
   // };
 
-  // const handleAdd2 = (e) => {
-  //   setAmount(e.target.value);
-  // };
-  // const handleAdd3 = (e) => {
-  //   setName(e.target.value);
-  // };
+  const handleAdd2 = (e) => {
+    setAmount(e.target.value);
+  };
+  const handleAdd3 = (e) => {
+    setName(e.target.value);
+  };
   const userid = currentUser.userid;
   const createCategory = async () => {
     if (!amount || !date) toast.error("something went wrong");

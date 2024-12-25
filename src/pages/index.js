@@ -26,11 +26,11 @@ const Home = () => {
   const [selectedCategory, setSelectedCategory] = useState([]);
   const [isChecked, setIsChecked] = useState(false);
   // console.log(currentUser, isLoading);
-  // useEffect(() => {
-  //   if (!currentUser && !isLoading) {
-  //     router.push("/auth/signIn");
-  //   }
-  // }, [currentUser, isLoading]);
+  useEffect(() => {
+    if (!currentUser && !isLoading) {
+      router.push("/auth/signIn");
+    }
+  }, [currentUser, isLoading]);
 
   const handleCheckboxChange = (e) => {
     setIsChecked(e.target.checked);
