@@ -1,7 +1,7 @@
 import Navbar from "../components/Navbar";
-import { useEffect, useReducer, useState } from "react";
+import { useEffect, useState } from "react";
 import PlusSign from "../../public/icons/PlusSign";
-import { FaChevronLeft, FaSearchengin } from "react-icons/fa6";
+import { FaChevronLeft } from "react-icons/fa6";
 import { FaAngleRight } from "react-icons/fa6";
 import axios from "axios";
 import AddRecord from "@/components/AddRecord";
@@ -12,6 +12,7 @@ import Transaction from "@/components/Records";
 import { useRouter } from "next/router";
 import { useAuthContext } from "@/providers/AuthProvider";
 import { toast } from "sonner";
+import { Footer } from "@/components/Footer";
 
 const Home = () => {
   const router = useRouter();
@@ -22,15 +23,9 @@ const Home = () => {
   const [myrecords, setMyrecords] = useState([]);
   const [allRecords, setAllRecords] = useState([]);
   const [category, setCategory] = useState();
-  const [search, setSearch] = useQueryState("search");
-  const [selectedCategory, setSelectedCategory] = useState([]);
-  const [isChecked, setIsChecked] = useState(false);
-  // console.log(currentUser, isLoading);
-  useEffect(() => {
-    if (!currentUser && isLoading) {
-      router.push("/auth/signIn");
-    }
-  }, [currentUser, isLoading]);
+  const [search, setSearch] = useQueryState("");
+  const [, setSelectedCategory] = useState([]);
+  const [, setIsChecked] = useState(false);
 
   const handleCheckboxChange = (e) => {
     setIsChecked(e.target.checked);
@@ -118,13 +113,19 @@ const Home = () => {
 
   const signOut = () => {
     setCurrentUser("");
+    localStorage.removeItem("user");
     const user = localStorage.getItem("user");
-    if (user.email === undefined) router.push("/auth/signIn");
+    if (user === "") router.push("/auth/signIn");
   };
   useEffect(() => {
     signOut;
-  }, []);
+  }, [currentUser, isLoading]);
 
+  useEffect(() => {
+    if (!currentUser && isLoading) {
+      router.push("/auth/signIn");
+    }
+  }, [currentUser]);
   return (
     <div>
       {showAdd && (
@@ -140,8 +141,10 @@ const Home = () => {
           />
         </div>
       )}
-      <div className={`bg-[#F3F4F6] flex flex-col gap-8 items-center relative`}>
-        <Navbar signOut={signOut} handleAdd={() => handleAdd()} />,
+      <div
+        className={`bg-[#F3F4F6] flex flex-col gap-8 items-center relative `}
+      >
+        <Navbar signOut={signOut} handleAdd={() => handleAdd()} />
         <div className="flex gap-6">
           <div className="bg-white flex flex-col px-6 py-4 w-[282px] gap-6 rounded-xl h-fit border border-[#E5E7EB]">
             <div className="flex flex-col gap-6">
@@ -156,7 +159,7 @@ const Home = () => {
             <input
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search"
-              className="border border-[#D1D5DB] rounded-lg px-4 py-1"
+              className="border border-[#D1D5DB] rounded-lg px-4 py-1 bg-white"
             />
             <div className="flex flex-col gap-1">
               <p className="font-semibold text-base text-[#1F2937] mb-3">
@@ -230,9 +233,11 @@ const Home = () => {
                   <FaAngleRight />
                 </div>
               </div>
-              <select className="w-[180px] py-3 px-4 rounded-lg font-semibold text-base text-[#1F2937] border border-[#D1D5DB]">
-                <option selected>Newest First</option>
-                <option> Latest First </option>
+              <select className="w-[180px] py-3 px-4 bg-white rounded-lg font-semibold text-base text-[#1F2937] border border-[#D1D5DB]">
+                <option className="bg-white" selected>
+                  Newest First
+                </option>
+                <option className="bg-white"> Latest First </option>
               </select>
             </div>
             <div className="flex flex-col gap-3">
@@ -253,6 +258,7 @@ const Home = () => {
             </div>
           </div>
         </div>
+        <Footer />
       </div>
     </div>
   );

@@ -34,7 +34,6 @@ const SignUp = () => {
         avatar_img: rePassword,
       })
       .then(function (response) {
-        console.log(response);
         localStorage.setItem("userid", response.data[0].userid);
         if (password != rePassword) return toast("password error");
         if (password.length <= 7) return toast("password urt baga bainaa");
@@ -55,7 +54,7 @@ const SignUp = () => {
   //       }
   //     );
   //   } catch (error) {
-  //     console.log(error);
+  //     (error);
   //   }
   // };
 

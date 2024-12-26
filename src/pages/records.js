@@ -143,7 +143,6 @@ const Records = () => {
 
   const [checkedCategories, setCheckedCategories] = useState(categories);
   selectedEyes;
-  // console.log(checkedCategories);
   const handleCategory = (input, index) => {
     let myCategories = [...selectedEyes];
     if (input == "true") {
@@ -170,7 +169,6 @@ const Records = () => {
     const filtered = records.map((day) =>
       day.filter((oneRecord) => oneRecord.money.includes("+"))
     );
-    // console.log(filtered);
     setRecords(filtered);
   };
   const handleAll = () => {
@@ -183,7 +181,6 @@ const Records = () => {
   const handleAdd = () => {
     setShowAdd(!showAdd);
   };
-  // const opacity = showAdd === false ? "opacity-100" : "opacity-100";
   return (
     // <div className="flex justify-center items-center flex-col">
     <div>

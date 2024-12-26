@@ -10,7 +10,7 @@ const Transaction = (props) => {
     if (!search) return true;
     return item.categoryname.toLowerCase().includes(search?.toLowerCase());
   });
-
+  console.log(filteredproducts);
   const oneCategorySelected = categories?.filter(
     (category) => category.selected === true
   );
@@ -23,10 +23,9 @@ const Transaction = (props) => {
 
   const deleteRecord = async (recordid) => {
     try {
-      const response = await axios.delete(
+      await axios.delete(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/transaction/delete/${recordid}`
       );
-      console.log(response);
       refetchRecord();
     } catch (error) {
       console.error(error);

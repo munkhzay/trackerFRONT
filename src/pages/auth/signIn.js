@@ -25,7 +25,6 @@ const SignIn = () => {
         userpassword: password,
       })
       .then(function (response) {
-        console.log(response.data);
         signin(response.data[0].email, response.data[0].userid);
       })
       .catch(function (error) {

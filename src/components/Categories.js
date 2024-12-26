@@ -5,7 +5,6 @@ const Categories = (props) => {
   const { categories, onSelectCategory, refetchRecord } = props;
 
   // const onSelectCategory = (onecategory) => {
-  //   console.log(onecategory.categoryid);
   //   const updatedCategory = categories.map((category) => {
   //     if (category.categoryid === onecategory.categoryid) {
   //       return {
@@ -24,8 +23,6 @@ const Categories = (props) => {
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/category/${categoryid}`
       )
       .then((response) => {
-        console.log(response);
-
         refetchRecord();
       })
       .catch((error) => {

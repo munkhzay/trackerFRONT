@@ -5,7 +5,7 @@ import { Toaster } from "sonner";
 const Navbar = (props) => {
   const { signOut, handleAdd } = props;
   return (
-    <div className="bg-white w-full px-[120px] py-4 flex justify-between ">
+    <div className="bg-white w-full px-[120px] py-4 flex justify-between mx-auto">
       <div className="flex gap-6 items-center">
         <Logo />
         <Link href={"/dashboard"}>

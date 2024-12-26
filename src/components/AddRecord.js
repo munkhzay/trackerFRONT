@@ -1,13 +1,6 @@
 import { IoClose } from "react-icons/io5";
 import { useEffect, useState } from "react";
-import Drink from "../../public/icons/Drink";
-import Gift from "../../public/icons/Gift";
-import Shopping from "../../public/icons/Shopping";
-import Taxi from "../../public/icons/Taxi";
-import RentIcon from "../../public/icons/RentIcon";
-import FoodExpense from "../../public/icons/FoodExpenseIcon";
 import axios from "axios";
-import { useRouter } from "next/router";
 import { toast } from "sonner";
 import { useAuthContext } from "@/providers/AuthProvider";
 const AddRecord = (props) => {
@@ -21,21 +14,14 @@ const AddRecord = (props) => {
   const [name, setName] = useState("");
   const [date, setDate] = useState();
   const [time, setTime] = useState();
-  const router = useRouter();
+
   const handleIncomeOrExpense = () => {
-    // const { name } = props;
-    // setIncomeExpense(name);
     if (incomeExpense === "Expense") {
       setIncomeExpense("Income");
     } else {
       setIncomeExpense("Expense");
     }
   };
-  console.log(date);
-  // const handleAdd = (e) => {
-  //   setValue(e.target.value);
-  // };
-
   const handleAdd2 = (e) => {
     setAmount(e.target.value);
   };
@@ -55,8 +41,7 @@ const AddRecord = (props) => {
         categoryid: select,
       })
       .then(function (response) {
-        console.log(response);
-        onCloseModal();
+        if (response) onCloseModal();
         refetchRecord();
       })
       .catch(function (error) {
@@ -69,29 +54,19 @@ const AddRecord = (props) => {
       await axios
         .get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/category`)
         .then(function (response) {
-          // handle success
-          console.log(response);
           setCategories(response.data);
         })
         .catch(function (error) {
-          // handle error
           console.log(error);
         })
-        .finally(function () {
-          // always executed
-        });
+        .finally(function () {});
     };
     getcategory();
   }, []);
 
-  // const Selectitem = (e) => {
-  //   setSelect(e.target.value);
-  // };
-  // console.log(select);
   const Expensebackground = incomeExpense === "Expense" ? "#0166FF" : "#31a82f";
   const Incomebackground = incomeExpense === "Income" ? "#16A34A" : "#31a82f";
-  const buttonColor = incomeExpense === "Income" ? "#31a82f" : "#0166FF";
-  // console.log(buttonColor);
+  const buttonColor = incomeExpense === "Expense" ? "#3182f" : "#3182f";
   const textColorIncome =
     incomeExpense === "Income" ? "text-black" : "text-base";
   const textColorExpense =
@@ -102,6 +77,7 @@ const AddRecord = (props) => {
   const month = "0" + String(today.getMonth());
   const hour = String(today.getHours());
   const minutes = String(today.getMinutes());
+
   return (
     <div className="w-[792px] flex flex-col rounded-xl  border-b border-[#E2E8F0] bg-slate-200">
       <div className="py-5 px-6 flex justify-between">
@@ -154,7 +130,6 @@ const AddRecord = (props) => {
                   Find or choose category
                 </option>
                 {categories.map((record, index) => {
-                  // console.log(select);
                   return (
                     <option key={index} value={record.categoryid}>
                       {record.categoryname}
@@ -190,8 +165,7 @@ const AddRecord = (props) => {
           </div>
           <button
             onClick={createCategory}
-            // onClick={() => handleAdd()}
-            className={`bg-[${buttonColor}] flex items-center justify-center py-2 rounded-3xl text-white`}
+            className={`bg-blue-500  flex items-center justify-center py-2 rounded-3xl m-4 text-black`}
           >
             Add Record
           </button>

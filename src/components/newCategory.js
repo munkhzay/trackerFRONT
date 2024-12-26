@@ -15,7 +15,6 @@ const NewCategories = (props) => {
         description: "Flintstone",
       })
       .then(function (response) {
-        console.log(response);
         onCloseModal();
         refetchRecord();
       })

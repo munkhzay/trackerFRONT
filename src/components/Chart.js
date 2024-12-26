@@ -48,7 +48,6 @@ const MyChart = (props) => {
   //   const time = amountData?.map((data) =>
   //     new Date(data.createdat).toLocaleDateString()
   //   );
-  //   console.log(time);
 
   const expensetime = Array(12).fill(0);
   const incometime = Array(12).fill(0);
@@ -115,10 +114,8 @@ const MyChart = (props) => {
       return onecat.amount;
     });
     const sumonearry = sumCat?.reduce((amount, prev) => amount + prev, 0);
-    // console.log(sumonearry);
     return sumonearry;
   });
-  // console.log(sumAmount);
   const optionsCircle = {
     responsive: true,
     plugins: {
