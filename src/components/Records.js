@@ -47,7 +47,7 @@ const Transaction = (props) => {
                 record.transaction === "Expense" ? "-" : "+",
                 record.amount,
               ]}
-              time={record.description}
+              time={record.createdat}
             />
           ))}
         </div>

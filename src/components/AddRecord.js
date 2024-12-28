@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "sonner";
 import { useAuthContext } from "@/providers/AuthProvider";
+import { format } from "date-fns";
 const AddRecord = (props) => {
   const { currentUser, isLoading } = useAuthContext();
   const { onCloseModal, refetchRecord } = props;
@@ -12,8 +13,6 @@ const AddRecord = (props) => {
   const [select, setSelect] = useState();
   const [categories, setCategories] = useState([]);
   const [name, setName] = useState("");
-  const [date, setDate] = useState();
-  const [time, setTime] = useState();
 
   const handleIncomeOrExpense = () => {
     if (incomeExpense === "Expense") {
@@ -30,7 +29,7 @@ const AddRecord = (props) => {
   };
   const userid = currentUser.userid;
   const createCategory = async () => {
-    if (!amount || !date) toast.error("something went wrong");
+    if (!amount || !select) return toast.error("something went wrong");
     await axios
       .post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/transaction`, {
         userid: userid,
@@ -66,17 +65,10 @@ const AddRecord = (props) => {
 
   const Expensebackground = incomeExpense === "Expense" ? "#0166FF" : "#31a82f";
   const Incomebackground = incomeExpense === "Income" ? "#16A34A" : "#31a82f";
-  const buttonColor = incomeExpense === "Expense" ? "#3182f" : "#3182f";
   const textColorIncome =
     incomeExpense === "Income" ? "text-black" : "text-base";
   const textColorExpense =
     incomeExpense === "Expense" ? "text-white" : "text-base";
-  const today = new Date();
-  const day = String(today.getDate());
-  const year = String(today.getFullYear());
-  const month = "0" + String(today.getMonth());
-  const hour = String(today.getHours());
-  const minutes = String(today.getMinutes());
 
   return (
     <div className="w-[792px] flex flex-col rounded-xl  border-b border-[#E2E8F0] bg-slate-200">
@@ -132,21 +124,15 @@ const AddRecord = (props) => {
             <div className="flex gap-2">
               <div className="flex flex-col gap-2 w-full">
                 <p>Date</p>
-                <input
-                  onChange={(e) => setDate(e.target.value)}
-                  type="date"
-                  defaultValue={`${year}-${month}-${day}`}
-                  className="py-3 px-4 bg-[#F9FAFB] border border-[#D1D5DB] rounded-lg"
-                />
+                <div className="py-3 px-4 bg-[#F9FAFB] border border-[#D1D5DB] rounded-lg">
+                  {format(new Date(), "dd:MM:yyyy")}
+                </div>
               </div>
               <div className="flex flex-col gap-2 w-full">
                 <p>Time</p>
-                <input
-                  onChange={(e) => setTime(e.target.value)}
-                  type="time"
-                  defaultValue={`${hour}:${minutes}`}
-                  className="py-3 px-4 bg-[#F9FAFB] border border-[#D1D5DB] rounded-lg"
-                />
+                <div className="py-3 px-4 bg-[#F9FAFB] border border-[#D1D5DB] rounded-lg">
+                  {format(new Date(), "hh:mm:ss")}
+                </div>
               </div>
             </div>
           </div>
