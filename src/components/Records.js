@@ -5,7 +5,6 @@ import { useQueryState } from "next-usequerystate";
 const Transaction = (props) => {
   const { myrecords, categories, refetchRecord } = props;
   const [search] = useQueryState("");
-
   const filteredproducts = myrecords.filter((item) => {
     if (!search) return true;
     return item.categoryname.toLowerCase().includes(search?.toLowerCase());
@@ -32,7 +31,6 @@ const Transaction = (props) => {
       console.error(error);
     }
   };
-
   return (
     <div className="flex flex-col gap-4">
       {selectedeyesRecords?.map((onerecord, index) => (

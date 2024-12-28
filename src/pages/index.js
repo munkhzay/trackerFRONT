@@ -222,8 +222,8 @@ const Home = () => {
             </div>
           </div>
           <div className="w-[894px] flex flex-col gap-4">
-            <div className="flex justify-between">
-              <div className="flex gap-4 items-center">
+            <div className="flex justify-end">
+              {/* <div className="flex gap-4 items-center">
                 <div className="w-8 h-8 rounded-lg p-1.5 bg-[#E5E7EB]">
                   <FaChevronLeft />
                 </div>
@@ -231,7 +231,7 @@ const Home = () => {
                 <div className="w-8 h-8 rounded-lg p-1.5 bg-[#E5E7EB]">
                   <FaAngleRight />
                 </div>
-              </div>
+              </div> */}
               <select className="w-[180px] py-3 px-4 bg-white rounded-lg font-semibold text-base text-[#1F2937] border border-[#D1D5DB]">
                 <option className="bg-white" selected>
                   Newest First
@@ -249,7 +249,7 @@ const Home = () => {
                   refetchRecord={sortTransaction}
                 />
               </div>
-              <p className="font-semibold text-base"> Yesterday </p>
+              {/* <p className="font-semibold text-base"> Old days </p> */}
               <div className="flex flex-col gap-3"></div>
             </div>
           </div>
