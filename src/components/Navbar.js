@@ -2,6 +2,7 @@ import Link from "next/link";
 import Logo from "../../public/icons/Logo";
 import { FaSignOutAlt } from "react-icons/fa";
 import { Toaster } from "sonner";
+
 const Navbar = (props) => {
   const { signOut, handleAdd } = props;
   return (

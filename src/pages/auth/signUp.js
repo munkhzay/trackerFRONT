@@ -44,20 +44,6 @@ const SignUp = () => {
       });
   };
 
-  // const createUser = async () => {
-  //   try {
-  //     const response = await axios.post(
-  //       `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/signup`,
-  //       {
-  //         email: "",
-  //         username: "",
-  //       }
-  //     );
-  //   } catch (error) {
-  //     (error);
-  //   }
-  // };
-
   return (
     <div className="flex w-screen h-screen">
       <div className="w-3/5 bg-[#FFFFFF] flex  justify-center items-center">
@@ -103,7 +89,6 @@ const SignUp = () => {
             />
             <Toaster />
             <button
-              // disabled={}
               onClick={createUser}
               className="bg-[#0166FF] justify-center font-normal text-xl flex items-center text-white text-center py-2.5 w-full rounded-3xl"
             >

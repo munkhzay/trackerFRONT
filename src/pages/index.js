@@ -11,7 +11,6 @@ import Categories from "@/components/Categories";
 import Transaction from "@/components/Records";
 import { useRouter } from "next/router";
 import { useAuthContext } from "@/providers/AuthProvider";
-import { toast } from "sonner";
 import { Footer } from "@/components/Footer";
 
 const Home = () => {
@@ -247,9 +246,6 @@ const Home = () => {
                   onSelectCategory={onSelectCategory}
                   categories={category}
                   myrecords={myrecords}
-                  // allRecords={allRecords}
-                  // setAllRecords={setAllRecords}
-                  // selectedcategory={selectedCategory}
                   refetchRecord={sortTransaction}
                 />
               </div>

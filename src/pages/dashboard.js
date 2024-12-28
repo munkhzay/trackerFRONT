@@ -12,6 +12,7 @@ import { Wifi } from "../../public/icons/Wifi";
 import OneRecord from "@/components/OneRecord";
 import Transaction from "@/components/Records";
 import AddRecord from "@/components/AddRecord";
+import { Footer } from "@/components/Footer";
 
 const Dashboard = () => {
   const [amountData, setAmountData] = useState();
@@ -167,25 +168,6 @@ const Dashboard = () => {
             />
           </div>
         </div>
-        {/* <div className="flex gap-6 px-[120px]">
-        <div className="w-full bg-white">
-          <div className="py-4 pl-6">
-            <p className="font-semibold text-base"> Income - Expense</p>
-          </div>
-          <div className="pt-8 py-6">
-            <img src="/images/Income.png" />
-          </div>
-        </div>
-        <div className="w-full bg-white">
-          <div className="px-6 py-4 justify-between flex">
-            <p className="font-semibold text-base">Income - Expense</p>
-            <p className="font-normal text-base">Jun 1 - Nov 30</p>
-          </div>
-          <div className="pt-8 py-6">
-            <img src="/images/Expense.png" />
-          </div>
-        </div>
-      </div> */}
         <div className="px-[120px] flex flex-col gap-8">
           <div>
             {" "}
@@ -193,7 +175,7 @@ const Dashboard = () => {
           </div>
           <div className="w-fill ">
             {" "}
-            <div className="w-full px-6 py-3 border bg-white border-[#E5E7EB] items-center justify-between flex rounded-xl font-bold">
+            <div className="w-full px-6 py-3 border bg-white border-[#E5E7EB] items-center justify-between flex rounded-xl font-bold gap-4">
               {" "}
               Last Records
             </div>
@@ -203,20 +185,9 @@ const Dashboard = () => {
               myrecords={myrecords}
               refetchRecord={sortTransaction}
             />
-            {/* {amountData?.map((record) => {
-            return (
-              <div key={record.userid}>
-                <OneRecord
-                  text={record.categoryname}
-                  transaction_type={record.transaction}
-                  money={record.amount}
-                  time={record.createdat}
-                />
-              </div>
-            );
-          })} */}
           </div>{" "}
         </div>{" "}
+        <Footer />
       </div>
     </div>
   );

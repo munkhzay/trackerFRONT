@@ -37,7 +37,7 @@ const AddRecord = (props) => {
         recordname: name,
         amount: amount,
         transaction: incomeExpense,
-        description: [date, time],
+        description: value,
         categoryid: select,
       })
       .then(function (response) {
@@ -101,15 +101,6 @@ const AddRecord = (props) => {
             </div>
           </div>
           <div className="flex flex-col mb-3 gap-[22px]">
-            {/* <div className="flex flex-col py-3 px-4 bg-[#F3F4F6] border border-[#D1D5DB] rounded-xl">
-              <p className="font-normal text-base"> Name </p>
-              <input
-                onChange={(e) => setName(e.target.value)}
-                type="text"
-                placeholder="Name"
-                className="font-normal text-xl bg-[#F3F4F6]"
-              />
-            </div> */}
             <div className="flex flex-col py-3 px-4 bg-[#F3F4F6] border border-[#D1D5DB] rounded-xl">
               <p className="font-normal text-base"> Amount </p>
               <input
@@ -136,10 +127,6 @@ const AddRecord = (props) => {
                     </option>
                   );
                 })}
-                {/* <option value="Food" className="px-[18px] py-2 flex gap-3">
-                  Food
-                </option> */}
-                {/* <option value="Home"> Home </option> */}
               </select>
             </div>
             <div className="flex gap-2">

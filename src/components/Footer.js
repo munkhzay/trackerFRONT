@@ -1,16 +1,13 @@
 import { format } from "date-fns";
 
 const formatDate = () => {
-  return format(new Date(), "MMMM d, yyyy"); // Example: December 26, 2024
+  return format(new Date(), "MMMM d, yyyy");
 };
 export const Footer = () => {
   return (
     <footer class="footer footer-center bg-white text-base-content rounded p-10">
       <nav class="grid grid-flow-col gap-4">
         <a class="link link-hover">{formatDate()}</a>
-        {/* <a class="link link-hover">Contact</a>
-        <a class="link link-hover">Jobs</a>
-        <a class="link link-hover">Press kit</a> */}
       </nav>
       <nav>
         <div class="grid grid-flow-col gap-4">

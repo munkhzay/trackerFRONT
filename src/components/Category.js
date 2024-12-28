@@ -1,6 +1,7 @@
 import EyeIcon from "../../public/icons/EyeIcon";
 import ClosedEyeIcon from "../../public/icons/ClosedEyeIcon";
 import { TiDelete } from "react-icons/ti";
+
 const Category = (props) => {
   const { categoryName, selected, handleDelete, onSelect } = props;
   const icon = selected === false ? <ClosedEyeIcon /> : <EyeIcon />;

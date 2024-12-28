@@ -1,19 +1,20 @@
 import OneRecord from "./OneRecord";
 import axios from "axios";
-import { useEffect, useState } from "react";
 import { useQueryState } from "next-usequerystate";
 
 const Transaction = (props) => {
   const { myrecords, categories, refetchRecord } = props;
   const [search] = useQueryState("");
+
   const filteredproducts = myrecords.filter((item) => {
     if (!search) return true;
     return item.categoryname.toLowerCase().includes(search?.toLowerCase());
   });
-  console.log(filteredproducts);
+
   const oneCategorySelected = categories?.filter(
     (category) => category.selected === true
   );
+
   const selectedeyesRecords = oneCategorySelected?.map((category) => {
     const recordsEye = filteredproducts.filter(
       (record) => record.categoryid === category.categoryid
@@ -31,11 +32,11 @@ const Transaction = (props) => {
       console.error(error);
     }
   };
-  // const incomeorexp = transaction_type === "Expense" ? "-" : "+";
+
   return (
-    <div>
+    <div className="flex flex-col gap-4">
       {selectedeyesRecords?.map((onerecord, index) => (
-        <div key={index}>
+        <div className="flex flex-col gap-4" key={index}>
           {onerecord.map((record) => (
             <OneRecord
               handleDelete={() => deleteRecord(record.recordid)}

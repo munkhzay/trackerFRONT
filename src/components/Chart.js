@@ -1,5 +1,3 @@
-// src/components/MyChart.js
-
 import React, { useEffect, useState } from "react";
 import { Bar, Doughnut } from "react-chartjs-2";
 import {
@@ -41,17 +39,8 @@ const MyChart = (props) => {
     recordData();
   }, []);
 
-  // <<<<<<< HEAD
-  //   const circleAmount = amountData?.map((one) => {
-  //     return one.amount;
-  //   });
-  //   const time = amountData?.map((data) =>
-  //     new Date(data.createdat).toLocaleDateString()
-  //   );
-
   const expensetime = Array(12).fill(0);
   const incometime = Array(12).fill(0);
-
   amountData?.forEach((data) => {
     const monthIndex = new Date(data.description).getMonth();
     if (data.transaction === "Expense") {
@@ -60,6 +49,7 @@ const MyChart = (props) => {
       incometime[monthIndex] += data.amount;
     }
   });
+
   const options = {
     responsive: true,
     plugins: {
@@ -105,7 +95,6 @@ const MyChart = (props) => {
   const categoryName = category?.map((name) => {
     return name.categoryname;
   });
-  const [allamount, setAllamount] = useState([]);
   const sumAmount = category?.map((cat) => {
     const allcatAmount = amountData?.filter(
       (amount) => amount.categoryname === cat.categoryname

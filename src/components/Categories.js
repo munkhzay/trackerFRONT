@@ -4,19 +4,6 @@ import axios from "axios";
 const Categories = (props) => {
   const { categories, onSelectCategory, refetchRecord } = props;
 
-  // const onSelectCategory = (onecategory) => {
-  //   const updatedCategory = categories.map((category) => {
-  //     if (category.categoryid === onecategory.categoryid) {
-  //       return {
-  //         ...category,
-  //         selected: !category.selected,
-  //       };
-  //     }
-  //     return category;
-  //   });
-  //   setCategory(updatedCategory);
-  // };
-
   const deleteCategory = async (categoryid) => {
     await axios
       .delete(
