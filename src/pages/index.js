@@ -23,8 +23,8 @@ const Home = () => {
   const [allRecords, setAllRecords] = useState([]);
   const [category, setCategory] = useState();
   const [search, setSearch] = useQueryState("");
-  const [, setSelectedCategory] = useState([]);
-  const [, setIsChecked] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState([]);
+  const [IsChecked, setIsChecked] = useState(false);
 
   const handleCheckboxChange = (e) => {
     setIsChecked(e.target.checked);
